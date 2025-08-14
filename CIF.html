@@ -420,8 +420,6 @@
             }
         }
 
-
-        /* Small tablets and large phones (768px and below) */
         @media (max-width: 768px) {
             .header {
                 padding: 20px 24px;
@@ -480,16 +478,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .radio-group.cols-2 {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-
-            .radio-group.cols-4 {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-
+            .radio-group.cols-2,
+            .radio-group.cols-4,
             .checkbox-group {
                 grid-template-columns: 1fr;
                 gap: 8px;
@@ -522,7 +512,6 @@
             }
         }
 
-        /* Mobile phones (640px and below) */
         @media (max-width: 640px) {
             .card {
                 margin: 0;
@@ -594,9 +583,38 @@
             .dec {
                 display: none;
             }
+
+            /* Extra mobile fix */
+            .main {
+                grid-template-columns: 1fr !important;
+            }
+
+            .steps-wrap {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                overflow-x: visible !important;
+            }
+
+            .step {
+                width: 100% !important;
+                min-width: unset !important;
+            }
+
+            .grid.cols-3,
+            .grid.cols-2,
+            .addr-2,
+            .radio-group.cols-2,
+            .radio-group.cols-4,
+            .checkbox-group {
+                grid-template-columns: 1fr !important;
+            }
+
+            html,
+            body {
+                overflow-x: hidden !important;
+            }
         }
 
-        /* Very small screens (480px and below) */
         @media (max-width: 480px) {
             .brand-row {
                 flex-direction: column;
@@ -630,7 +648,6 @@
             }
         }
 
-        /* Landscape orientation adjustments for tablets */
         @media (max-width: 1024px) and (orientation: landscape) {
             .main {
                 grid-template-columns: 200px 1fr;
@@ -656,7 +673,6 @@
             }
         }
 
-        /* Ensure touch-friendly interactions on tablets */
         @media (hover: none) and (pointer: coarse) {
             .btn {
                 padding: 16px 20px;
