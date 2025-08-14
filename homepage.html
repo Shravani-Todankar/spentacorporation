@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spenta Homepage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -13,54 +13,83 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Lato', sans-serif;
-
         }
 
         /* Hero Section */
         .hero {
             position: relative;
             width: 100%;
+            min-height: 60vh;
+            overflow: hidden;
         }
 
         .hero img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
+            min-height: 400px;
         }
 
         .hero-text {
             position: absolute;
-            bottom: 10%;
-            left: 0%;
-            background: white;
-            padding: 10px 15px;
+            bottom: 8%;
+            left: 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 25px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
             max-width: 500px;
             border-left: 5px solid #fbd44a;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .hero-text p {
             font-size: 17px;
             letter-spacing: 1px;
+            line-height: 1.4;
+            color: #333;
+            font-weight: 400;
         }
 
         .hero-text img {
             width: 80px;
+            height: 80px;
+            object-fit: contain;
+            flex-shrink: 0;
         }
 
-        /* CTA */
+        /* CTA Section */
         .cta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #2e2e2e;
+            background: linear-gradient(135deg, #2e2e2e 0%, #1a1a1a 100%);
             color: white;
-            padding: 50px 5%;
+            padding: 60px 5%;
+            min-height: 200px;
         }
 
         .cta small {
-            color: #ccc;
+            color: #fbd44a;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 12px;
         }
 
         .cta-left {
@@ -68,27 +97,36 @@
             flex-direction: column;
             justify-content: center;
             gap: 20px;
+            flex: 1;
         }
 
         .cta-left h2 {
             font-weight: 300;
             letter-spacing: 2px;
             font-size: 40px;
+            line-height: 1.2;
+            max-width: 600px;
+        }
+
+        .cta-right {
+            flex-shrink: 0;
         }
 
         .cta-button {
             position: relative;
-            padding: 12px 28px;
+            padding: 15px 35px;
             font-size: 16px;
+            font-weight: 600;
             color: #fff;
             background: transparent;
-            border: none;
-            border-left: 3px solid #fbd44a;
+            border: 2px solid #fbd44a;
+            border-left: 4px solid #fbd44a;
             cursor: pointer;
             overflow: hidden;
-            transition: color 0.8s ease;
+            transition: all 0.3s ease;
             z-index: 1;
-            /* Keep above ::before */
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .cta-button::before {
@@ -100,35 +138,176 @@
             height: 100%;
             background-color: #fbd44a;
             z-index: 0;
-            /* Now appears behind text but above section bg */
-            transition: width 0.8s ease;
+            transition: width 0.3s ease;
         }
 
         .cta-button span {
             position: relative;
             z-index: 1;
-            /* Text above fill */
+            transition: color 0.3s ease;
         }
 
         .cta-button:hover::before {
             width: 100%;
         }
 
-        /* Responsive */
-        @media(max-width: 768px) {
+        .cta-button:hover span {
+            color: #2e2e2e;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(251, 212, 74, 0.3);
+        }
+
+        /* Tablet View */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .hero {
+                min-height: 50vh;
+            }
+
             .hero-text {
                 bottom: 10%;
-                max-width: 300px;
+                left: 4%;
+                max-width: 450px;
+                padding: 18px 22px;
+            }
+
+            .hero-text p {
+                font-size: 16px;
+            }
+
+            .hero-text img {
+                width: 70px;
+                height: 70px;
+            }
+
+            .cta {
+                padding: 50px 4%;
+                gap: 30px;
+            }
+
+            .cta-left h2 {
+                font-size: 36px;
+            }
+
+            .cta-button {
+                padding: 14px 30px;
+                font-size: 15px;
+            }
+        }
+
+        /* Mobile View */
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 40vh;
+            }
+
+            .hero img {
+                min-height: 300px;
+            }
+
+            .hero-text {
+                position: static;
+                background: white;
+                padding: 20px;
+                margin: -50px 20px 0 20px;
+                border-radius: 12px;
+                border-left: 5px solid #fbd44a;
+                box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.15);
+                z-index: 10;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+                max-width: none;
+            }
+
+            .hero-text p {
+                font-size: 15px;
+                letter-spacing: 0.5px;
+                order: 2;
+            }
+
+            .hero-text img {
+                width: 60px;
+                height: 60px;
+                order: 1;
             }
 
             .cta {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
+                align-items: center;
+                text-align: center;
+                gap: 30px;
+                padding: 50px 20px;
             }
 
-            .footer-top {
-                flex-direction: column;
+            .cta-left {
+                align-items: center;
+                gap: 15px;
+            }
+
+            .cta-left h2 {
+                font-size: 28px;
+                letter-spacing: 1px;
+                line-height: 1.3;
+                text-align: center;
+            }
+
+            .cta-button {
+                padding: 12px 25px;
+                font-size: 14px;
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+
+        /* Small Mobile View */
+        @media (max-width: 480px) {
+            .hero-text {
+                margin: -40px 15px 0 15px;
+                padding: 18px;
+            }
+
+            .hero-text p {
+                font-size: 14px;
+            }
+
+            .cta {
+                padding: 40px 15px;
+            }
+
+            .cta-left h2 {
+                font-size: 24px;
+            }
+
+            .cta small {
+                font-size: 11px;
+            }
+        }
+
+        /* Loading Animation */
+        .hero img {
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Accessibility Improvements */
+        .cta-button:focus {
+            outline: 3px solid #fbd44a;
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-text,
+            .hero img,
+            .cta-button {
+                animation: none;
+                transition: none;
             }
         }
     </style>
@@ -142,15 +321,12 @@
     <!-- Hero Section -->
     <section class="hero">
         <img src="https://spentacorporation.com/wp-content/uploads/2024/08/Altavista-Homepage-banner.jpg"
-            alt="Building">
+            alt="Modern luxury building showcasing Spenta Corporation's architectural excellence"
+            loading="eager">
         <div class="hero-text">
             <p>Designing timeless, luxurious spaces that redefine modern architecture &amp; living.</p>
-            <!-- <a> -->
-                <!-- <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://spentacorporation.com"
-                alt="QR Code"> -->
-                <img src="Userlogin QR Code.png"
-                alt="QR Code">
-            <!-- </a> -->
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://spentacorporation.com"
+                alt="QR Code - Scan to visit Spenta Corporation website">
         </div>
     </section>
 
@@ -161,7 +337,9 @@
             <h2>Become A Part Of The Spenta Family</h2>
         </div>
         <div class="cta-right">
-            <button class="cta-button"><span>REACH OUT TO US</span></button>
+            <button class="cta-button" aria-label="Contact us to learn more about Spenta Corporation">
+                <span>REACH OUT TO US</span>
+            </button>
         </div>
     </section>
 
@@ -172,10 +350,21 @@
         function loadHTML(id, file) {
             fetch(file)
                 .then(response => response.text())
-                .then(data => document.getElementById(id).innerHTML = data);
+                .then(data => document.getElementById(id).innerHTML = data)
+                .catch(error => console.log('Error loading', file, ':', error));
         }
+        
+        // Load components
         loadHTML("header", "header.html");
         loadHTML("footer", "footer.html");
+
+        // Add smooth loading effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroImg = document.querySelector('.hero img');
+            heroImg.onload = function() {
+                this.style.opacity = '1';
+            };
+        });
     </script>
 </body>
 
