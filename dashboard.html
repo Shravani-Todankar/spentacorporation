@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SPENTA — All Leads Dashboard</title>
     <style>
+        /* Keep your current CSS here (unchanged) */
         :root {
             --bg: #f5f5f5;
             --text: #1b1f24;
@@ -123,7 +124,7 @@
         /* Dashboard content area */
         .dashboard-content {
             /* padding: 24px 36px; */
-            background: url('dashboard.jpeg');
+            background: #fff;
             min-height: calc(100vh - 140px);
             object-fit: cover;
         }
@@ -231,7 +232,7 @@
                 flex-direction: column;
                 gap: 4px;
             }
-            
+
             .leads-action-btn {
                 font-size: 10px;
                 padding: 5px 8px;
@@ -242,28 +243,28 @@
             .dashboard-content {
                 padding: 16px 20px;
             }
-            
+
             .dashboard-header {
                 padding: 20px 24px;
             }
-            
+
             .dashboard-brand-row img {
                 height: 60px;
             }
-            
+
             .dashboard-decorative {
                 right: 20px;
             }
-            
+
             .leads-table {
                 font-size: 13px;
             }
-            
+
             .leads-table-header th {
                 padding: 12px 8px;
                 font-size: 11px;
             }
-            
+
             .leads-table-cell {
                 padding: 10px 8px;
             }
@@ -273,29 +274,29 @@
             .dashboard-title {
                 font-size: 26px;
             }
-            
+
             .dashboard-header {
                 padding: 16px 20px;
             }
-            
+
             .dashboard-decorative {
                 right: 16px;
             }
-            
+
             .dashboard-decorative div:first-child {
                 width: 22px;
                 height: 22px;
             }
-            
+
             .dashboard-decorative div:last-child {
                 width: 32px;
                 height: 32px;
             }
-            
+
             .leads-table-container {
                 overflow-x: auto;
             }
-            
+
             .leads-table {
                 min-width: 800px;
             }
@@ -320,8 +321,107 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* New Styles for Filters and Stats */
+        .filters-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px;
+        }
+
+        .filters-bar div {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-right: 20px;
+        }
+
+        .filters-bar input,
+        .filters-bar select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: row !important;
+        }
+
+        .filters-bar button {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        /* Stats Cards */
+        .stats-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 150px;
+            background: #fff;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .stat-card span {
+            display: block;
+            font-size: 14px;
+            font-weight: normal;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+
+            .filters-bar,
+            .stats-cards {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -343,35 +443,118 @@
             </div>
         </header>
 
+        <!-- NEW: Filters -->
+        <!-- <div class="filters-bar">
+            <input type="text" id="searchInput" placeholder="Search by name, email, phone, form no">
+            <select id="propertyFilter">
+                <option value="">All Properties</option>
+                <option value="Altavista">Altavista</option>
+            </select>
+            <input type="date" id="startDate">
+            <input type="date" id="endDate">
+            <select id="assessmentFilter">
+                <option value="">All Assessment Status</option>
+                <option value="Done">Done</option>
+                <option value="Pending">Pending</option>
+            </select>
+            <select id="bookingFilter">
+                <option value="">All Booking Status</option>
+                <option value="Done">Done</option>
+                <option value="Pending">Pending</option>
+            </select>
+            <button class="btn-primary" id="applyFilters">Apply Filters</button>
+            <button class="btn-success" id="exportExcel">Export</button>
+            <button class="btn-secondary" id="clearFilters">Clear</button>
+            <button class="btn-info" id="refreshPage">Refresh</button>
+        </div> -->
+
+        <div class="filters-bar">
+            <div>
+                <label>Search</label>
+                <input type="text" id="searchInput" placeholder="Search by name, email, phone, form no">
+            </div>
+            <div>
+                <label>Property Filter</label>
+                <select id="propertyFilter">
+                    <option value="">All Properties</option>
+                    <option value="Altavista">Altavista</option>
+                </select>
+            </div>
+            <div>
+                <label>Date From</label>
+                <input type="date" id="startDate">
+            </div>
+            <div>
+                <label>Date To</label>
+                <input type="date" id="endDate">
+            </div>
+            <div>
+                <label>Assessment Status</label>
+                <select id="assessmentFilter">
+                    <option value="">All</option>
+                    <option value="Done">Done</option>
+                    <option value="Pending">Pending</option>
+                </select>
+            </div>
+            <div>
+                <label>Booking Status</label>
+                <select id="bookingFilter">
+                    <option value="">All</option>
+                    <option value="Done">Done</option>
+                    <option value="Pending">Pending</option>
+                </select>
+            </div>
+            <div class="action-btn" style="align-self: flex-end;">
+                <button class="btn-primary" id="applyFilters">Apply Filters</button>
+                <button class="btn-success" id="exportExcel">Export to Excel</button>
+                <button class="btn-secondary" id="clearFilters">Clear Filters</button>
+                <button class="btn-info" id="refreshPage">Refresh</button>
+            </div>
+        </div>
+
+
+        <!-- NEW: Stats -->
+        <div class="stats-cards">
+            <div class="stat-card" id="totalLeads">0 <span>Total Leads</span></div>
+            <div class="stat-card" id="filteredResults">0 <span>Filtered Results</span></div>
+            <div class="stat-card" id="assessmentsDone">0 <span>Assessments Done</span></div>
+            <div class="stat-card" id="bookingsDone">0 <span>Bookings Done</span></div>
+        </div>
+
         <!-- Dashboard Content -->
         <div class="dashboard-content">
-            <!-- <div class="leads-table-container">
+            <div class="leads-table-container">
                 <table class="leads-table" id="leadsTable">
                     <thead class="leads-table-header">
                         <tr>
                             <th>FORM NO</th>
                             <th>FULL NAME</th>
+                            <th>PROPERTY</th>
+                            <th>PHONE NUMBER</th>
                             <th>CITY</th>
-                            <th>BUDGET</th>
-                            <th>CONFIG</th>
                             <th>LEAD SOURCE(S)</th>
                             <th>DATE</th>
                             <th>ACTIONS</th>
                         </tr>
                     </thead>
                     <tbody id="leadsTableBody">
+                        <!-- Example row -->
                         <tr class="leads-table-row">
-                            <td class="leads-table-cell"></td>
-                            <td class="leads-table-cell"></td>
-                            <td class="leads-table-cell"></td>
-                            <td class="leads-table-cell"></td>
-                            <td class="leads-table-cell"></td>
-                            <td class="leads-table-cell"></td>
-                            <td class="leads-table-cell"></td>
+                            <td class="leads-table-cell">ALT-55912</td>
+                            <td class="leads-table-cell">
+                                Kunal Dinesh Darji<br>
+                                <small>kunal.techinfinity@gmail.com</small>
+                            </td>
+                            <td class="leads-table-cell">Altavista</td>
+                            <td class="leads-table-cell">8888888888</td>
+                            <td class="leads-table-cell">Mumbai</td>
+                            <td class="leads-table-cell">Channel Partner</td>
+                            <td class="leads-table-cell">2025-08-14 07:18</td>
                             <td class="leads-table-cell">
                                 <div class="leads-action-buttons">
                                     <button class="leads-action-btn edit-customer">EDIT CUSTOMER</button>
-                                    <button class="leads-action-btn update-assessment">UPDATE INTERNAL ASSESSMENT</button>
+                                    <button class="leads-action-btn update-assessment">UPDATE INTERNAL
+                                        ASSESSMENT</button>
                                     <button class="leads-action-btn booking-form">BOOKING FORM</button>
                                 </div>
                             </td>
@@ -379,10 +562,11 @@
                     </tbody>
                 </table>
             </div>
-        </div> -->
+        </div>
     </div>
 
     <script>
+        // Keep your existing LeadsDashboard code here (unchanged)
         // Dashboard functionality
         class LeadsDashboard {
             constructor() {
@@ -410,14 +594,14 @@
                 const action = button.textContent.toLowerCase().replace(/\s+/g, '_');
                 const row = button.closest('.leads-table-row');
                 const formNo = row.querySelector('.leads-table-cell').textContent;
-                
+
                 // Add click animation
                 button.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     button.style.transform = 'scale(1)';
                 }, 150);
 
-                switch(action) {
+                switch (action) {
                     case 'edit_customer':
                         this.editCustomer(formNo);
                         break;
@@ -454,20 +638,20 @@
                 // Create notification element
                 const notification = document.createElement('div');
                 notification.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: ${type === 'success' ? '#22c55e' : type === 'error' ? '#ef4444' : '#3b82f6'};
-                    color: white;
-                    padding: 12px 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                    z-index: 1000;
-                    font-size: 14px;
-                    font-weight: 500;
-                    transition: all 0.3s ease;
-                    transform: translateX(100%);
-                `;
+                   position: fixed;
+                   top: 20px;
+                   right: 20px;
+                   background: ${type === 'success' ? '#22c55e' : type === 'error' ? '#ef4444' : '#3b82f6'};
+                   color: white;
+                   padding: 12px 20px;
+                   border-radius: 8px;
+                   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                   z-index: 1000;
+                   font-size: 14px;
+                   font-weight: 500;
+                   transition: all 0.3s ease;
+                   transform: translateX(100%);
+               `;
                 notification.textContent = message;
                 document.body.appendChild(notification);
 
@@ -516,7 +700,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Add smooth scrolling behavior
             document.documentElement.style.scrollBehavior = 'smooth';
-            
+
             // Add focus management for accessibility
             const actionButtons = document.querySelectorAll('.leads-action-btn');
             actionButtons.forEach(button => {
@@ -524,12 +708,41 @@
                     button.style.outline = '2px solid var(--brand)';
                     button.style.outlineOffset = '2px';
                 });
-                
+
                 button.addEventListener('blur', () => {
                     button.style.outline = 'none';
                 });
             });
         });
+
+
+        // New functionality hooks
+        document.getElementById('refreshPage').addEventListener('click', () => {
+            location.reload();
+        });
+
+        document.getElementById('clearFilters').addEventListener('click', () => {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('propertyFilter').value = '';
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            document.getElementById('assessmentFilter').value = '';
+            document.getElementById('bookingFilter').value = '';
+        });
+
+        document.getElementById('applyFilters').addEventListener('click', () => {
+            alert('Filters applied (demo only)');
+        });
+
+        document.getElementById('exportExcel').addEventListener('click', () => {
+            alert('Exporting to Excel (demo only)');
+        });
+
+        // Update stats dynamically (demo)
+        document.getElementById('totalLeads').innerHTML = '1 <span>Total Leads</span>';
+        document.getElementById('filteredResults').innerHTML = '1 <span>Filtered Results</span>';
+        document.getElementById('assessmentsDone').innerHTML = '0 <span>Assessments Done</span>';
+        document.getElementById('bookingsDone').innerHTML = '0 <span>Bookings Done</span>';
     </script>
 </body>
 
