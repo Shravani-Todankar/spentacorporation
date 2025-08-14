@@ -288,7 +288,24 @@
             text-align: center;
             padding-top: 20px;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
+        .signature-pad {
+            width: 100%;
+            max-width: 320px;
+            /* tweak if you want */
+            height: 140px;
+            /* visual CSS height */
+            border: 1px solid #333;
+            background: #fff;
+            touch-action: none;
+            /* prevent page scrolling while drawing */
+            display: block;
+        }
+
 
         .signature-4th {
             grid-column: 1 / -1;
@@ -1636,36 +1653,100 @@
             }
         }
 
-        // Digital signature handling
-        document.querySelectorAll('.signature-pad').forEach((canvas, index) => {
-            const ctx = canvas.getContext('2d');
-            let drawing = false;
+        (function () {
+            function initSignaturePad(canvas) {
+                const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
-            canvas.addEventListener('mousedown', e => {
-                drawing = true;
-                ctx.beginPath();
-                ctx.moveTo(e.offsetX, e.offsetY);
-            });
+                // Style
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.strokeStyle = '#000';
 
-            canvas.addEventListener('mousemove', e => {
-                if (!drawing) return;
-                ctx.lineTo(e.offsetX, e.offsetY);
-                ctx.stroke();
-            });
+                // Handle HiDPI & resize so strokes stay crisp
+                function resizeCanvas() {
+                    const dpr = window.devicePixelRatio || 1;
+                    const rect = canvas.getBoundingClientRect();
+                    // Set the internal bitmap size to DPR-scaled value
+                    canvas.width = Math.max(1, Math.round(rect.width * dpr));
+                    canvas.height = Math.max(1, Math.round(rect.height * dpr));
+                    // Reset transform then scale so 1 unit == 1 CSS pixel
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                }
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
 
-            canvas.addEventListener('mouseup', () => {
-                drawing = false;
-            });
+                let drawing = false;
 
-            canvas.addEventListener('mouseleave', () => {
-                drawing = false;
-            });
+                const getPos = (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    // Use clientX/Y so it works for both mouse and touch/pointer
+                    return {
+                        x: e.clientX - rect.left,
+                        y: e.clientY - rect.top
+                    };
+                };
 
-            // Clear button
-            canvas.parentElement.querySelector('.clear-signature').addEventListener('click', () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            });
-        });
+                canvas.addEventListener('pointerdown', (e) => {
+                    canvas.setPointerCapture(e.pointerId);
+                    drawing = true;
+                    const { x, y } = getPos(e);
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    e.preventDefault();
+                }, { passive: false });
+
+                canvas.addEventListener('pointermove', (e) => {
+                    if (!drawing) return;
+                    const { x, y } = getPos(e);
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                    e.preventDefault();
+                }, { passive: false });
+
+                const stop = (e) => {
+                    if (!drawing) return;
+                    drawing = false;
+                    try { canvas.releasePointerCapture(e.pointerId); } catch { }
+                    e.preventDefault();
+                };
+
+                canvas.addEventListener('pointerup', stop, { passive: false });
+                canvas.addEventListener('pointercancel', stop, { passive: false });
+                canvas.addEventListener('pointerleave', stop, { passive: false });
+
+                // Hook up Clear button next to each canvas
+                const clearBtn = canvas.parentElement.querySelector('.clear-signature');
+                if (clearBtn) {
+                    clearBtn.addEventListener('click', () => {
+                        const rect = canvas.getBoundingClientRect();
+                        ctx.clearRect(0, 0, rect.width, rect.height);
+                    });
+                }
+            }
+
+            // Initialize all signature pads on the page
+            document.querySelectorAll('canvas.signature-pad').forEach(initSignaturePad);
+
+            // Optional: capture signature images on form submit
+            const form = document.getElementById('bookingForm');
+            if (form) {
+                form.addEventListener('submit', () => {
+                    document.querySelectorAll('canvas.signature-pad').forEach((c, i) => {
+                        // Example: put base64 into (or create) a hidden input
+                        let hidden = c.parentElement.querySelector('input[type="hidden"].signature-data');
+                        if (!hidden) {
+                            hidden = document.createElement('input');
+                            hidden.type = 'hidden';
+                            hidden.name = `signature_${i + 1}`;
+                            hidden.className = 'signature-data';
+                            c.parentElement.appendChild(hidden);
+                        }
+                        hidden.value = c.toDataURL('image/png'); // submit as base64
+                    });
+                });
+            }
+        })();
 
 
         // Initialize conditional sections
