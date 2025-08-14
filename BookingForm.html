@@ -286,8 +286,7 @@
 
         .signature-box {
             text-align: center;
-            padding-top: 60px;
-            border-top: 1px solid #333;
+            padding-top: 20px;
             position: relative;
         }
 
@@ -1475,19 +1474,37 @@
 
                 <!-- Signatures Section -->
                 <div class="signatures-section">
+                    <!-- Digital Signature Box -->
                     <div class="signature-box">
                         <div>Signature of 1st Applicant</div>
+                        <canvas class="signature-pad" width="250" height="100"
+                            style="border:1px solid #333; background:#fff;"></canvas>
+                        <br>
+                        <button type="button" class="clear-signature">Clear</button>
                     </div>
+
                     <div class="signature-box">
                         <div>Signature of 2nd Applicant</div>
+                        <canvas class="signature-pad" width="250" height="100"
+                            style="border:1px solid #333; background:#fff;"></canvas>
+                        <br>
+                        <button type="button" class="clear-signature">Clear</button>
                     </div>
                     <div class="signature-box">
                         <div>Signature of 3rd Applicant</div>
+                        <canvas class="signature-pad" width="250" height="100"
+                            style="border:1px solid #333; background:#fff;"></canvas>
+                        <br>
+                        <button type="button" class="clear-signature">Clear</button>
                     </div>
                 </div>
 
-                <div class="signature-box signature-4th">
+                <div class="signature-box">
                     <div>Signature of 4th Applicant</div>
+                    <canvas class="signature-pad" width="250" height="100"
+                        style="border:1px solid #333; background:#fff;"></canvas>
+                    <br>
+                    <button type="button" class="clear-signature">Clear</button>
                 </div>
 
                 <div style="text-align: center; margin: 20px 0;">
@@ -1618,6 +1635,38 @@
                 });
             }
         }
+
+        // Digital signature handling
+        document.querySelectorAll('.signature-pad').forEach((canvas, index) => {
+            const ctx = canvas.getContext('2d');
+            let drawing = false;
+
+            canvas.addEventListener('mousedown', e => {
+                drawing = true;
+                ctx.beginPath();
+                ctx.moveTo(e.offsetX, e.offsetY);
+            });
+
+            canvas.addEventListener('mousemove', e => {
+                if (!drawing) return;
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+            });
+
+            canvas.addEventListener('mouseup', () => {
+                drawing = false;
+            });
+
+            canvas.addEventListener('mouseleave', () => {
+                drawing = false;
+            });
+
+            // Clear button
+            canvas.parentElement.querySelector('.clear-signature').addEventListener('click', () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+        });
+
 
         // Initialize conditional sections
         toggleConditionalSections();
