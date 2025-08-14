@@ -1033,11 +1033,7 @@
 
             // Handle next button click
             nextBtn.addEventListener('click', function () {
-                if (validateFields(currentStep)) {
-                    setStep(currentStep + 1);
-                } else {
-                    alert('Please fill in all required fields before continuing.');
-                }
+                setStep(currentStep + 1);
             });
 
             // Handle previous button clicks
@@ -1049,13 +1045,11 @@
                 setStep(currentStep - 1);
             });
 
-            // Handle step navigation clicks
+            // Handle step navigation clicks - UNRESTRICTED ACCESS
             steps.forEach((stepElement, index) => {
                 stepElement.addEventListener('click', function () {
-                    // Allow navigation to completed steps or current step
-                    if (index + 1 <= currentStep || stepElement.classList.contains('done')) {
-                        setStep(index + 1);
-                    }
+                    // Allow navigation to any step freely
+                    setStep(index + 1);
                 });
             });
 
