@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spenta Homepage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lato', sans-serif;
+
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            width: 100%;
+        }
+
+        .hero img {
+            width: 100%;
+            display: block;
+        }
+
+        .hero-text {
+            position: absolute;
+            bottom: 10%;
+            left: 0%;
+            background: white;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 500px;
+            border-left: 5px solid #fbd44a;
+        }
+
+        .hero-text p {
+            font-size: 17px;
+            letter-spacing: 1px;
+        }
+
+        .hero-text img {
+            width: 30%;
+        }
+
+        /* CTA */
+        .cta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2e2e2e;
+            color: white;
+            padding: 50px 5%;
+        }
+
+        .cta small {
+            color: #ccc;
+        }
+
+        .cta-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .cta-left h2 {
+            font-weight: 300;
+            letter-spacing: 2px;
+            font-size: 40px;
+        }
+
+        .cta-button {
+            position: relative;
+            padding: 12px 28px;
+            font-size: 16px;
+            color: #fff;
+            background: transparent;
+            border: none;
+            border-left: 3px solid #fbd44a;
+            cursor: pointer;
+            overflow: hidden;
+            transition: color 0.8s ease;
+            z-index: 1;
+            /* Keep above ::before */
+        }
+
+        .cta-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #fbd44a;
+            z-index: 0;
+            /* Now appears behind text but above section bg */
+            transition: width 0.8s ease;
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+            /* Text above fill */
+        }
+
+        .cta-button:hover::before {
+            width: 100%;
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .hero-text {
+                bottom: 10%;
+                max-width: 300px;
+            }
+
+            .cta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .footer-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div id="header"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="https://spentacorporation.com/wp-content/uploads/2024/08/Altavista-Homepage-banner.jpg"
+            alt="Building">
+        <div class="hero-text">
+            <p>Designing timeless, luxurious spaces that redefine modern architecture &amp; living.</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://spentacorporation.com"
+                alt="QR Code">
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-left">
+            <small>GET IN TOUCH</small>
+            <h2>Become A Part Of The Spenta Family</h2>
+        </div>
+        <div class="cta-right">
+            <button class="cta-button"><span>REACH OUT TO US</span></button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <script>
+        function loadHTML(id, file) {
+            fetch(file)
+                .then(response => response.text())
+                .then(data => document.getElementById(id).innerHTML = data);
+        }
+        loadHTML("header", "header.html");
+        loadHTML("footer", "footer.html");
+    </script>
+</body>
+
+</html>

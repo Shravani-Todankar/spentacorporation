@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: url('https://spentacorporation.com/wp-content/uploads/2024/08/Altavista-Homepage-banner.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 150px 20px 100px;
+        }
+
+        .user-login-container {
+            background: white;
+            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+        }
+
+        .user-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            font-weight: 300;
+            color: #666;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-close-btn:hover {
+            color: #333;
+        }
+
+        .user-login-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.8rem;
+        }
+
+        .user-login-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 2.5rem;
+            line-height: 1.4;
+        }
+
+        .user-form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .user-form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .user-form-inline {
+            display: flex;
+            gap: 8px;
+        }
+
+        .user-form-inline input {
+            flex: 1;
+        }
+
+        .user-form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+            background: #fafafa;
+        }
+
+        .user-form-group input:focus {
+            border-color: #fbd44a;
+            background: white;
+        }
+
+        .user-form-group input::placeholder {
+            color: #aaa;
+        }
+
+        .user-send-btn {
+            padding: 14px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #fbd44a;
+            color: #333;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .user-send-btn:hover {
+            background: #f0c83a;
+        }
+
+        .user-otp-message {
+            font-size: 13px;
+            color: green;
+            margin-top: 6px;
+        }
+
+        .user-submit-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 50px;
+            background: #fbd44a;
+            color: #333;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .user-submit-btn:hover {
+            background: #f0c83a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(251, 212, 74, 0.4);
+        }
+
+        .user-submit-btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 120px 20px 80px;
+            }
+
+            .user-login-container {
+                padding: 2rem 1.5rem;
+                margin: 0;
+                max-width: 100%;
+            }
+
+            .user-login-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div id="header"></div>
+
+    <main>
+        <div class="user-login-container">
+            <button class="user-close-btn" onclick="window.history.back()">×</button>
+
+            <h1 class="user-login-title">User Login</h1>
+            <p class="user-login-subtitle">Please enter your contact number and OTP to continue.</p>
+
+            <form id="userLoginForm">
+                <div class="user-form-group">
+                    <label for="contactNo">Contact No.</label>
+                    <div class="user-form-inline">
+                        <input type="tel" id="contactNo" name="contactNo" placeholder="Enter your contact number"
+                            required>
+                        <button type="button" class="user-send-btn" onclick="sendOTP()">Send OTP</button>
+                    </div>
+                    <div id="otpMessage" class="user-otp-message"></div>
+                </div>
+
+                <div class="user-form-group">
+                    <label for="otp">OTP Verification</label>
+                    <input type="text" id="otp" name="otp" placeholder="Enter OTP" required>
+                </div>
+
+                <div class="user-form-group">
+                    <label for="propertyName">Select Property / Project Name</label>
+                    <select id="propertyName" name="propertyName" required
+                        style="width:100%; padding:14px 16px; border:2px solid #e1e1e1; border-radius:8px; font-size:16px; background:#fafafa; outline:none; transition:border-color 0.3s;">
+                        <option value="" disabled selected>Select property or project</option>
+                        <option value="Altavista">Altavista</option>
+                        <option value="Spenta Medius">Spenta Medius</option>
+                        <option value="Spenta Enclave">Spenta Enclave</option>
+                        <option value="Altura Towers">Altura Towers</option>
+                        <option value="Royal Greens">Royal Greens</option>
+                        <option value="Skyline Heights">Skyline Heights</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="user-submit-btn">Submit</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <script>
+        let generatedOTP = "";
+
+        function loadHTML(id, file) {
+            fetch(file)
+                .then(response => response.text())
+                .then(data => document.getElementById(id).innerHTML = data)
+                .catch(error => console.log('Error loading ' + file + ':', error));
+        }
+
+        loadHTML("header", "header.html");
+        loadHTML("footer", "footer.html");
+
+        function sendOTP() {
+            const contact = document.getElementById("contactNo").value;
+            const otpMessage = document.getElementById("otpMessage");
+
+            if (!contact || contact.length < 10) {
+                otpMessage.style.color = "red";
+                otpMessage.textContent = "Please enter a valid contact number.";
+                return;
+            }
+
+            // Generate 6-digit OTP
+            generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+
+            // For demo purposes, show OTP on screen (in real case, send via SMS API)
+            otpMessage.style.color = "green";
+            otpMessage.textContent = `Your OTP is: ${generatedOTP}`;
+        }
+
+        document.getElementById('userLoginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const enteredOTP = document.getElementById('otp').value;
+
+            if (enteredOTP === generatedOTP && generatedOTP !== "") {
+                window.location.href = "CIF.html";
+            } else {
+                alert("Invalid OTP. Please try again.");
+            }
+        });
+    </script>
+
+</body>
+
+</html>
