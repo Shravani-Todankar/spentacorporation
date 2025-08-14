@@ -378,29 +378,7 @@
             box-shadow: 0 6px 18px rgba(246, 213, 92, .28)
         }
 
-        /* Enhanced Responsive Design */
-
-        /* Large tablets (1024px and below) */
-        @media (max-width: 1200px) {
-            .main {
-                grid-template-columns: 240px 1fr;
-            }
-
-            .form {
-                padding: 30px 36px 36px;
-            }
-
-            .cols-3 {
-                grid-template-columns: 1fr 1fr;
-                grid-template-rows: 1fr 1fr;
-            }
-
-            .cols-3>div:nth-child(3) {
-                grid-column: 1 / -1;
-            }
-        }
-
-        /* Standard tablets (1024px and below) */
+        /* Responsive Fixes */
         @media (max-width: 1024px) {
             .main {
                 grid-template-columns: 1fr;
@@ -413,63 +391,15 @@
             }
 
             .steps-wrap {
-                flex-direction: row;
-                overflow-x: auto;
-                overflow-y: hidden;
-                padding-bottom: 8px;
-                gap: 12px;
-                scrollbar-width: thin;
-                scrollbar-color: var(--brand) transparent;
-            }
-
-            .steps-wrap::-webkit-scrollbar {
-                height: 4px;
-            }
-
-            .steps-wrap::-webkit-scrollbar-track {
-                background: transparent;
-            }
-
-            .steps-wrap::-webkit-scrollbar-thumb {
-                background: var(--brand);
-                border-radius: 2px;
+                flex-wrap: wrap !important;
+                overflow-x: hidden !important;
             }
 
             .step {
-                min-width: 220px;
-                flex-shrink: 0;
+                min-width: auto !important;
+                width: 100% !important;
             }
 
-            .form {
-                padding: 28px 32px 32px;
-            }
-
-            .header {
-                padding: 22px 32px;
-            }
-
-            .dec {
-                right: 24px;
-            }
-
-            .cols-3 {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .cols-3>div:nth-child(3) {
-                grid-column: 1 / -1;
-            }
-
-            .radio-group.cols-4 {
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-            }
-        }
-
-        /* Fix layout cut-off for tablets */
-        @media (max-width: 1024px) {
-
-            /* Make all multi-column grids stack */
             .grid.cols-3,
             .grid.cols-2,
             .addr-2 {
@@ -477,16 +407,14 @@
                 gap: 14px;
             }
 
-            /* Prevent overflow by ensuring inputs fit */
+            .form {
+                padding: 20px !important;
+            }
+
             .field,
             select,
             textarea {
-                max-width: 100%;
-            }
-
-            /* Adjust padding so content fits comfortably */
-            .form {
-                padding: 20px;
+                max-width: 100% !important;
             }
         }
 
