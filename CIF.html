@@ -26,7 +26,6 @@
             background: #fff;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, system-ui, sans-serif;
             color: var(--text);
-            line-height: 1.5;
         }
 
         /* Card shell */
@@ -35,10 +34,9 @@
             border-radius: 16px;
             overflow: hidden;
             background: #fff;
-            min-height: 100vh;
         }
 
-        /* Header strip */
+        /* Updated Header strip */
         .header {
             position: relative;
             padding: 24px 36px;
@@ -59,12 +57,10 @@
         .brand-row img {
             height: 80px;
             width: auto;
-            flex-shrink: 0;
         }
 
         .header-text {
             flex: 1;
-            min-width: 0;
         }
 
         .title {
@@ -84,7 +80,7 @@
             margin: 0;
         }
 
-        /* Decorative elements */
+        /* Updated decorative elements */
         .dec {
             position: absolute;
             right: 30px;
@@ -127,7 +123,7 @@
         .main {
             display: grid;
             grid-template-columns: 280px 1fr;
-            min-height: calc(100vh - 140px);
+            min-height: 560px
         }
 
         .steps {
@@ -139,9 +135,7 @@
         .steps-wrap {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            position: sticky;
-            top: 0;
+            gap: 8px
         }
 
         .step {
@@ -152,11 +146,6 @@
             padding: 10px 12px;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .step:hover {
-            background: rgba(246, 213, 92, 0.1);
         }
 
         .badge {
@@ -169,13 +158,11 @@
             place-items: center;
             font-weight: 700;
             font-size: 13px;
-            transition: all 0.2s ease;
         }
 
         .label {
             font-size: 14px;
-            color: #222;
-            font-weight: 500;
+            color: #222
         }
 
         .step.active {
@@ -195,8 +182,6 @@
         /* Form area */
         .form {
             padding: 34px 44px 40px;
-            overflow-y: auto;
-            max-height: calc(100vh - 140px);
         }
 
         .section {
@@ -209,8 +194,7 @@
 
         .section h3 {
             margin: 0 0 18px;
-            font-size: 22px;
-            font-weight: 600;
+            font-size: 22px
         }
 
         label {
@@ -238,9 +222,6 @@
             outline: 0;
             background: #fff;
             transition: border .2s, box-shadow .2s, transform .15s;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
         }
 
         .field:focus,
@@ -250,8 +231,9 @@
             box-shadow: 0 0 0 3px rgba(246, 213, 92, .14);
         }
 
-        /* Pretty select */
+        /* Pretty select (chevron like mock) */
         select {
+            appearance: none;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%236b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
             background-repeat: no-repeat;
             background-position: right 12px center;
@@ -270,6 +252,17 @@
 
         .cols-3 {
             grid-template-columns: 1fr 1fr 1fr
+        }
+
+        .addr-grid {
+            display: grid;
+            gap: 12px
+        }
+
+        .addr-2 {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: 1fr 1fr
         }
 
         .radio-group {
@@ -305,23 +298,6 @@
             gap: 8px;
             margin: 0;
             cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: background-color 0.2s ease;
-        }
-
-        .radio-group label:hover,
-        .checkbox-group label:hover {
-            background-color: rgba(246, 213, 92, 0.1);
-        }
-
-        /* Enhanced radio and checkbox styling */
-        input[type="radio"],
-        input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            margin: 0;
-            flex-shrink: 0;
         }
 
         /* Validation styles */
@@ -394,7 +370,6 @@
             color: #222;
             cursor: pointer;
             transition: transform .12s, box-shadow .2s, background .2s;
-            min-height: 48px;
         }
 
         .btn:hover {
@@ -403,9 +378,7 @@
             box-shadow: 0 6px 18px rgba(246, 213, 92, .28)
         }
 
-        /* ENHANCED MOBILE RESPONSIVENESS */
-
-        /* Large tablets and small desktops (1024px and below) */
+        /* Responsive Fixes */
         @media (max-width: 1024px) {
             .main {
                 grid-template-columns: 1fr;
@@ -415,59 +388,43 @@
                 border-right: 0;
                 border-bottom: 1px solid var(--border);
                 padding: 16px 20px;
-                position: sticky;
-                top: 0;
-                z-index: 10;
-                background: #fafafa;
             }
 
             .steps-wrap {
                 display: flex;
                 flex-direction: row;
-                overflow-x: auto;
-                gap: 12px;
-                padding-bottom: 8px;
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-            }
-
-            .steps-wrap::-webkit-scrollbar {
-                display: none;
+                justify-content: center;
+                overflow-x: hidden !important;
             }
 
             .step {
-                min-width: 200px;
-                flex-shrink: 0;
+                min-width: auto !important;
+                width: 100% !important;
+            }
+
+            .grid.cols-3,
+            .grid.cols-2,
+            .addr-2 {
+                grid-template-columns: 1fr 1fr 1fr !important;
+                gap: 14px;
             }
 
             .form {
-                padding: 24px 32px 32px;
-                max-height: none;
-                overflow-y: visible;
+                padding: 20px !important;
             }
 
-            .grid.cols-3 {
-                grid-template-columns: 1fr 1fr;
-                gap: 14px;
-            }
-
-            .grid.cols-2 {
-                grid-template-columns: 1fr 1fr;
-                gap: 14px;
+            .field,
+            select,
+            textarea {
+                max-width: 100% !important;
             }
         }
 
-        /* Tablets (768px and below) */
-        @media (max-width: 768px) {
-            .card {
-                margin: 0;
-                border-radius: 0;
-                min-height: 100vh;
-            }
 
+        /* Small tablets and large phones (768px and below) */
+        @media (max-width: 768px) {
             .header {
                 padding: 20px 24px;
-                border-radius: 0;
             }
 
             .brand-row {
@@ -488,15 +445,15 @@
             }
 
             .form {
-                padding: 20px 24px 24px;
+                padding: 24px 28px 28px;
             }
 
             .steps {
-                padding: 12px 16px;
+                padding: 14px 18px;
             }
 
             .step {
-                min-width: 180px;
+                min-width: 200px;
                 padding: 8px 10px;
             }
 
@@ -510,25 +467,31 @@
                 font-size: 13px;
             }
 
-            .section h3 {
-                font-size: 20px;
-                margin-bottom: 16px;
-            }
-
-            .grid.cols-3,
-            .grid.cols-2 {
+            .cols-2 {
                 grid-template-columns: 1fr;
                 gap: 12px;
             }
 
-            .radio-group.cols-2,
-            .checkbox-group {
+            .cols-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .addr-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .radio-group.cols-2 {
                 grid-template-columns: 1fr;
                 gap: 8px;
             }
 
             .radio-group.cols-4 {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
                 gap: 8px;
             }
 
@@ -545,12 +508,30 @@
                 width: 32px;
                 height: 32px;
             }
+
+            .section h3 {
+                font-size: 20px;
+                margin-bottom: 16px;
+            }
+
+            .field,
+            select,
+            textarea {
+                padding: 11px 12px;
+                font-size: 14px;
+            }
         }
 
         /* Mobile phones (640px and below) */
         @media (max-width: 640px) {
+            .card {
+                margin: 0;
+                border-radius: 0;
+            }
+
             .header {
-                padding: 16px 20px;
+                padding: 18px 20px;
+                border-radius: 0;
             }
 
             .brand-row img {
@@ -566,16 +547,16 @@
             }
 
             .form {
-                padding: 16px 20px 20px;
+                padding: 20px;
             }
 
             .steps {
-                padding: 10px 16px;
+                padding: 12px 16px;
             }
 
             .step {
-                min-width: 160px;
-                padding: 6px 8px;
+                min-width: 180px;
+                padding: 8px;
             }
 
             .badge {
@@ -595,42 +576,23 @@
 
             label {
                 font-size: 13px;
-                margin: 6px 0;
+                margin: 6px 0 6px;
             }
 
             .field,
             select,
             textarea {
-                padding: 12px 14px;
-                font-size: 16px; /* Prevents zoom on iOS */
-                border-radius: 8px;
+                padding: 10px 12px;
+                font-size: 14px;
             }
 
             .btn {
-                padding: 14px 16px;
-                font-size: 16px;
-                min-height: 52px;
-                border-radius: 8px;
+                padding: 12px 16px;
+                font-size: 14px;
             }
 
             .dec {
                 display: none;
-            }
-
-            .radio-group.cols-4 {
-                grid-template-columns: 1fr;
-            }
-
-            .radio-group label,
-            .checkbox-group label {
-                padding: 12px 8px;
-                font-size: 15px;
-            }
-
-            input[type="radio"],
-            input[type="checkbox"] {
-                width: 18px;
-                height: 18px;
             }
         }
 
@@ -638,148 +600,85 @@
         @media (max-width: 480px) {
             .brand-row {
                 flex-direction: column;
-                align-items: center;
+                align-items: flex-start;
                 gap: 12px;
-                text-align: center;
+                text-align: left;
             }
 
             .brand-row img {
                 height: 50px;
+                align-self: center;
             }
 
             .title {
                 font-size: 22px;
+                text-align: center;
             }
 
             .subtitle {
                 font-size: 12px;
-            }
-
-            .form {
-                padding: 12px 16px 16px;
+                text-align: center;
             }
 
             .step {
-                min-width: 140px;
-                padding: 6px;
+                min-width: 160px;
             }
 
-            .steps-wrap {
-                gap: 8px;
-            }
-
-            .actions {
-                margin-top: 20px;
-                padding-top: 16px;
-            }
-
-            .section h3 {
-                font-size: 16px;
-                margin-bottom: 12px;
-            }
-
-            .grid {
-                gap: 10px;
+            .radio-group label,
+            .checkbox-group label {
+                font-size: 13px;
             }
         }
 
-        /* Landscape orientation for phones */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .header {
-                padding: 12px 20px;
-            }
-
-            .brand-row {
-                flex-direction: row;
-                gap: 16px;
-                margin-bottom: 8px;
-            }
-
-            .brand-row img {
-                height: 40px;
-            }
-
-            .title {
-                font-size: 20px;
-            }
-
-            .subtitle {
-                font-size: 12px;
-            }
-
-            .form {
-                padding: 16px 20px;
+        /* Landscape orientation adjustments for tablets */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            .main {
+                grid-template-columns: 200px 1fr;
             }
 
             .steps {
-                padding: 8px 16px;
+                border-right: 1px solid var(--border);
+                border-bottom: none;
+            }
+
+            .steps-wrap {
+                flex-direction: column;
+                overflow: visible;
+                padding-bottom: 0;
             }
 
             .step {
-                padding: 4px 6px;
+                min-width: auto;
             }
 
-            .badge {
-                width: 24px;
-                height: 24px;
-                font-size: 10px;
+            .form {
+                padding: 24px 28px;
             }
         }
 
-        /* High DPI displays */
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        /* Ensure touch-friendly interactions on tablets */
+        @media (hover: none) and (pointer: coarse) {
+            .btn {
+                padding: 16px 20px;
+                font-size: 16px;
+            }
+
             .field,
             select,
             textarea {
-                border-width: 1px;
+                padding: 14px 16px;
+                font-size: 16px;
             }
-        }
 
-        /* Accessibility improvements */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            .step {
+                padding: 12px 14px;
             }
-        }
 
-        /* Focus improvements for keyboard navigation */
-        .step:focus-visible,
-        .btn:focus-visible,
-        .field:focus-visible,
-        select:focus-visible,
-        textarea:focus-visible {
-            outline: 2px solid var(--brand);
-            outline-offset: 2px;
-        }
-
-        /* Smooth scrolling for step navigation */
-        .steps-wrap {
-            scroll-behavior: smooth;
-        }
-
-        /* Loading state for form submission */
-        .btn.loading {
-            opacity: 0.7;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .btn.loading::after {
-            content: '';
-            width: 16px;
-            height: 16px;
-            border: 2px solid transparent;
-            border-top: 2px solid currentColor;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-left: 8px;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
+            input[type="radio"],
+            input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                margin-right: 8px;
             }
         }
     </style>
@@ -787,10 +686,10 @@
 
 <body>
     <div class="card">
-        <!-- Header -->
+        <!-- Updated Header -->
         <header class="header">
             <div class="brand-row">
-                <img src="https://via.placeholder.com/80x80/f6d55c/000000?text=SPENTA" alt="Spenta Logo">
+                <img src="spenta white.png" alt="Spenta Logo">
                 <div class="header-text">
                     <div class="title">Customer Information Form</div>
                     <div class="subtitle">Please fill the form below to know more about the property</div>
@@ -807,19 +706,19 @@
             <!-- Steps -->
             <aside class="steps">
                 <div class="steps-wrap" id="stepList">
-                    <div class="step active" data-step="1" tabindex="0">
+                    <div class="step active" data-step="1">
                         <div class="badge">1</div>
                         <div class="label">Customer Details</div>
                     </div>
-                    <div class="step" data-step="2" tabindex="0">
+                    <div class="step" data-step="2">
                         <div class="badge">2</div>
-                        <div class="label">Employment Details</div>
+                        <div class="label">Customer's Employment Details</div>
                     </div>
-                    <div class="step" data-step="3" tabindex="0">
+                    <div class="step" data-step="3">
                         <div class="badge">3</div>
-                        <div class="label">Requirements</div>
+                        <div class="label">Customer's Requirements</div>
                     </div>
-                    <div class="step" data-step="4" tabindex="0">
+                    <div class="step" data-step="4">
                         <div class="badge">4</div>
                         <div class="label">Source of Visit</div>
                     </div>
@@ -828,7 +727,7 @@
 
             <!-- Form -->
             <section class="form">
-                <form id="cif" novalidate>
+                <form id="cif">
                     <!-- Step 1 -->
                     <div class="section active" data-step="1">
                         <h3>Customer Details</h3>
@@ -839,22 +738,22 @@
                                 <label for="firstName" class="required">First Name</label>
                                 <input class="field" type="text" id="firstName" name="firstName"
                                     placeholder="First Name" required minlength="2" maxlength="50" pattern="[A-Za-z\s]+"
-                                    title="Only letters and spaces allowed" autocomplete="given-name" />
+                                    title="Only letters and spaces allowed" />
                                 <div class="error-message">Please enter a valid first name (2-50 characters, letters
                                     only)</div>
                             </div>
                             <div>
                                 <label for="middleName">Middle Name</label>
                                 <input class="field" type="text" id="middleName" name="middleName"
-                                    placeholder="Middle Name" maxlength="50" pattern="[A-Za-z\s]*"
-                                    title="Only letters and spaces allowed" autocomplete="additional-name" />
+                                    placeholder="Middle Name" required maxlength="50" pattern="[A-Za-z\s]*"
+                                    title="Only letters and spaces allowed" />
                                 <div class="error-message">Please enter a valid middle name (letters only)</div>
                             </div>
                             <div>
                                 <label for="lastName" class="required">Last Name</label>
                                 <input class="field" type="text" id="lastName" name="lastName" placeholder="Last Name"
                                     required minlength="2" maxlength="50" pattern="[A-Za-z\s]+"
-                                    title="Only letters and spaces allowed" autocomplete="family-name" />
+                                    title="Only letters and spaces allowed" />
                                 <div class="error-message">Please enter a valid last name (2-50 characters, letters
                                     only)</div>
                             </div>
@@ -865,14 +764,14 @@
                             <div>
                                 <label for="email" class="required">Email</label>
                                 <input class="field" type="email" id="email" name="email" placeholder="Enter Your Email"
-                                    required maxlength="100" autocomplete="email" />
+                                    required maxlength="100" />
                                 <div class="error-message">Please enter a valid email address</div>
-                                <div class="success-message">✓ Valid email format</div>
+                                <div class="success-message">âœ" Valid email format</div>
                             </div>
                             <div>
                                 <label for="dob" class="required">Date of Birth</label>
                                 <input class="field" type="date" id="dob" name="dob" required min="1924-01-01"
-                                    max="2006-12-31" autocomplete="bday" />
+                                    max="2006-12-31" />
                                 <div class="error-message">Please enter a valid date (age must be between 18-100 years)
                                 </div>
                             </div>
@@ -882,7 +781,7 @@
                         <label class="required" style="margin-top:14px">Residential Address</label>
                         <textarea class="field" id="address" name="address" rows="3"
                             placeholder="Enter your complete residential address" required minlength="10"
-                            maxlength="500" autocomplete="street-address"></textarea>
+                            maxlength="500"></textarea>
                         <div class="char-counter" id="addressCounter">0/500 characters</div>
                         <div class="error-message">Please enter a complete address (10-500 characters)</div>
 
@@ -892,20 +791,20 @@
                                 <label for="city" class="required">City</label>
                                 <input class="field" type="text" id="city" name="city" placeholder="City" required
                                     minlength="2" maxlength="50" pattern="[A-Za-z\s]+"
-                                    title="Only letters and spaces allowed" autocomplete="address-level2" />
+                                    title="Only letters and spaces allowed" />
                                 <div class="error-message">Please enter a valid city name (letters only)</div>
                             </div>
                             <div>
                                 <label for="locality" class="required">Locality</label>
                                 <input class="field" type="text" id="locality" name="locality" placeholder="Locality"
-                                    required minlength="2" maxlength="100" autocomplete="address-level3" />
+                                    required minlength="2" maxlength="100" />
                                 <div class="error-message">Please enter a valid locality (2-100 characters)</div>
                             </div>
                             <div>
                                 <label for="pincode" class="required">Pincode</label>
                                 <input class="field" type="text" id="pincode" name="pincode" placeholder="Pincode"
                                     required pattern="[0-9]{6}" maxlength="6"
-                                    title="Please enter a valid 6-digit pincode" autocomplete="postal-code" />
+                                    title="Please enter a valid 6-digit pincode" />
                                 <div class="error-message">Please enter a valid 6-digit pincode</div>
                             </div>
                         </div>
@@ -937,13 +836,13 @@
                             <div>
                                 <label for="companyName">Company Name</label>
                                 <input class="field" id="companyName" name="companyName" placeholder="Company Name"
-                                    maxlength="100" autocomplete="organization" />
+                                    maxlength="100" />
                                 <div class="error-message">Company name should not exceed 100 characters</div>
                             </div>
                             <div>
                                 <label for="designation">Designation</label>
                                 <input class="field" id="designation" name="designation" placeholder="Designation"
-                                    maxlength="50" autocomplete="organization-title" />
+                                    maxlength="50" />
                                 <div class="error-message">Designation should not exceed 50 characters</div>
                             </div>
                         </div>
@@ -967,9 +866,10 @@
 
                         <label class="required" style="margin-top:16px">Budget</label>
                         <div class="radio-group cols-2">
-                            <label><input type="radio" name="budget" value="3.5-4.00" required /> 3.5 - 4.00 Cr.</label>
-                            <label><input type="radio" name="budget" value="4.5-5.00" /> 4.5 - 5.00 Cr.</label>
-                            <label><input type="radio" name="budget" value="6.00-7.00" /> 6.00 - 7.00 Cr.</label>
+                            <label><input type="radio" name="budget" value="3.5-4.00" required /> 3.5 â€" 4.00
+                                Cr.</label>
+                            <label><input type="radio" name="budget" value="4.5-5.00" /> 4.5 â€" 5.00 Cr.</label>
+                            <label><input type="radio" name="budget" value="6.00-7.00" /> 6.00 â€" 7.00 Cr.</label>
                         </div>
 
                         <div class="grid cols-2" style="margin-top:16px">
@@ -977,8 +877,8 @@
                                 <label class="required">Construction Status</label>
                                 <div class="radio-group">
                                     <label><input type="radio" name="status" value="uc" required /> Under Construction
-                                        (> 1 yr)</label>
-                                    <label><input type="radio" name="status" value="nc" /> Near Completion (< 1
+                                        (&gt; 1 yr)</label>
+                                    <label><input type="radio" name="status" value="nc" /> Near Completion (&lt; 1
                                         yr)</label>
                                     <label><input type="radio" name="status" value="rp" /> Ready Possession</label>
                                 </div>
@@ -1024,7 +924,7 @@
                     </div>
 
                     <div class="actions">
-                        <button type="button" class="btn" id="nextBtn">Continue →</button>
+                        <button type="button" class="btn" id="nextBtn">Continue â†'</button>
                     </div>
                 </form>
             </section>
@@ -1158,6 +1058,15 @@
             return isValid;
         }
 
+        // Phone number formatting (if needed in future)
+        function formatPhoneNumber(value) {
+            const numbers = value.replace(/\D/g, '');
+            if (numbers.length <= 10) {
+                return numbers.replace(/(\d{5})(\d{5})/, '$1-$2');
+            }
+            return numbers.substr(0, 10).replace(/(\d{5})(\d{5})/, '$1-$2');
+        }
+
         // Prevent invalid characters in numeric fields
         function restrictNumericInput() {
             const numericFields = document.querySelectorAll('input[type="text"][pattern*="[0-9]"]');
@@ -1205,21 +1114,7 @@
                 s.classList.toggle('done', i + 1 < current);
             });
             btn.textContent = current === total ? 'Submit Form' : 'Continue →';
-            
-            // Scroll to top of form on mobile
-            if (window.innerWidth <= 768) {
-                document.querySelector('.form').scrollTo({ top: 0, behavior: 'smooth' });
-            }
-
-            // Focus management for accessibility
-            const currentSection = document.querySelector(`.section[data-step="${current}"]`);
-            const firstInput = currentSection.querySelector('input, textarea, select');
-            if (firstInput && window.innerWidth > 768) {
-                setTimeout(() => firstInput.focus(), 100);
-            }
-
-            // Update URL hash for deep linking
-            history.replaceState(null, null, `#step-${current}`);
+            document.querySelector('.form').scrollTop = 0;
         }
 
         function validateStep() {
@@ -1275,23 +1170,9 @@
             }
 
             if (!isValid) {
-                // Show user-friendly error message
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'temp-error';
-                errorDiv.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #ef4444; color: white; padding: 12px 20px; border-radius: 8px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15);';
-                errorDiv.textContent = 'Please complete all required fields correctly.';
-                document.body.appendChild(errorDiv);
-
-                setTimeout(() => {
-                    errorDiv.remove();
-                }, 3000);
-
+                alert('Please complete all required fields correctly.');
                 if (firstInvalidField) {
                     firstInvalidField.focus();
-                    // Scroll to field on mobile
-                    if (window.innerWidth <= 768) {
-                        firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
                 }
                 return false;
             }
@@ -1301,10 +1182,6 @@
 
         // Form submission with data collection
         function submitForm() {
-            // Add loading state
-            btn.classList.add('loading');
-            btn.textContent = 'Submitting...';
-
             const formData = new FormData(form);
             const data = {};
 
@@ -1327,30 +1204,21 @@
 
             console.log('Form Data:', data);
 
-            // Simulate API call
-            setTimeout(() => {
-                // Show success message
-                const successDiv = document.createElement('div');
-                successDiv.className = 'temp-success';
-                successDiv.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #22c55e; color: white; padding: 12px 20px; border-radius: 8px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15);';
-                successDiv.textContent = 'Form submitted successfully! Redirecting...';
-                document.body.appendChild(successDiv);
+            // Here you would normally send the data to your server
+            // fetch('/api/submit-form', { method: 'POST', body: JSON.stringify(data) })
 
-                setTimeout(() => {
-                    // Uncomment the line below to redirect to thank you page
-                    // window.location.href = "thankyou.html";
-                    
-                    // For demo purposes, reset the form
-                    form.reset();
-                    document.querySelectorAll('.char-counter').forEach(counter => {
-                        counter.textContent = counter.textContent.replace(/\d+/, '0');
-                        counter.className = 'char-counter';
-                    });
-                    setStep(1);
-                    btn.classList.remove('loading');
-                    successDiv.remove();
-                }, 2000);
-            }, 1500);
+            // alert('Form submitted successfully! Thank you for your interest.');
+            // form.reset();
+
+            window.location.href = "thankyou.html";
+
+            // Reset character counters
+            document.querySelectorAll('.char-counter').forEach(counter => {
+                counter.textContent = counter.textContent.replace(/\d+/, '0');
+                counter.className = 'char-counter';
+            });
+
+            setStep(1);
         }
 
         // Event listeners
@@ -1363,68 +1231,12 @@
             if (validateStep()) setStep(current + 1);
         });
 
-        // Step navigation
+        // REMOVED RESTRICTION: Allow free navigation between all steps
         steps.forEach((s, i) => {
             s.addEventListener('click', () => {
                 setStep(i + 1);
             });
-
-            // Keyboard navigation
-            s.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setStep(i + 1);
-                }
-            });
         });
-
-        // Handle URL hash on page load
-        function handleInitialHash() {
-            const hash = window.location.hash;
-            if (hash.startsWith('#step-')) {
-                const stepNum = parseInt(hash.replace('#step-', ''));
-                if (stepNum >= 1 && stepNum <= total) {
-                    setStep(stepNum);
-                }
-            }
-        }
-
-        // Swipe gestures for mobile
-        function setupSwipeGestures() {
-            let startX = null;
-            let startY = null;
-
-            const formElement = document.querySelector('.form');
-
-            formElement.addEventListener('touchstart', (e) => {
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-            });
-
-            formElement.addEventListener('touchend', (e) => {
-                if (!startX || !startY) return;
-
-                const endX = e.changedTouches[0].clientX;
-                const endY = e.changedTouches[0].clientY;
-
-                const diffX = startX - endX;
-                const diffY = startY - endY;
-
-                // Only respond to horizontal swipes
-                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-                    if (diffX > 0 && current < total) {
-                        // Swipe left - next step
-                        if (validateStep()) setStep(current + 1);
-                    } else if (diffX < 0 && current > 1) {
-                        // Swipe right - previous step
-                        setStep(current - 1);
-                    }
-                }
-
-                startX = null;
-                startY = null;
-            });
-        }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function () {
@@ -1432,52 +1244,10 @@
             setupRealTimeValidation();
             restrictNumericInput();
             restrictNameInput();
-            handleInitialHash();
-            setupSwipeGestures();
             setStep(1);
-
-            // Auto-save form data to prevent data loss
-            const inputs = document.querySelectorAll('input, textarea, select');
-            inputs.forEach(input => {
-                input.addEventListener('input', () => {
-                    const formData = new FormData(form);
-                    const data = {};
-                    for (let [key, value] of formData.entries()) {
-                        data[key] = value;
-                    }
-                    localStorage.setItem('cifFormData', JSON.stringify(data));
-                });
-            });
-
-            // Restore form data if available
-            const savedData = localStorage.getItem('cifFormData');
-            if (savedData) {
-                try {
-                    const data = JSON.parse(savedData);
-                    Object.keys(data).forEach(key => {
-                        const field = document.querySelector(`[name="${key}"]`);
-                        if (field) {
-                            if (field.type === 'radio' || field.type === 'checkbox') {
-                                const specificField = document.querySelector(`[name="${key}"][value="${data[key]}"]`);
-                                if (specificField) specificField.checked = true;
-                            } else {
-                                field.value = data[key];
-                            }
-                        }
-                    });
-                } catch (e) {
-                    console.warn('Could not restore form data:', e);
-                }
-            }
         });
 
-        // Clear saved data on successful submission
-        function clearSavedData() {
-            localStorage.removeItem('cifFormData');
-        }
-
-        // Add to submitForm function
-        // clearSavedData(); // Uncomment this line in the submitForm function
+        setStep(1);
     </script>
 </body>
 
