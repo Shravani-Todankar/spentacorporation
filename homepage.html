@@ -53,6 +53,7 @@
                 transform: translateY(30px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -163,14 +164,15 @@
         /* Tablet View */
         @media (max-width: 1024px) and (min-width: 769px) {
             .hero {
-                min-height: 50vh;
+                min-height: auto;
             }
 
             .hero-text {
                 bottom: 10%;
-                left: 4%;
+                left: 0%;
                 max-width: 450px;
                 padding: 18px 22px;
+                height: 100px;
             }
 
             .hero-text p {
@@ -200,7 +202,7 @@
         /* Mobile View */
         @media (max-width: 768px) {
             .hero {
-                min-height: 40vh;
+                min-height: auto;
             }
 
             .hero img {
@@ -208,18 +210,13 @@
             }
 
             .hero-text {
-                position: static;
-                background: white;
-                padding: 20px;
-                margin: -50px 20px 0 20px;
-                border-radius: 12px;
-                border-left: 5px solid #fbd44a;
-                box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.15);
-                z-index: 10;
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-                max-width: none;
+                position: absolute;
+                bottom: 8%;
+                left: 0%;
+                margin-right: 40px;
+                height: 100px;
+                display: flex;
+                flex-direction: row-reverse;
             }
 
             .hero-text p {
@@ -264,8 +261,12 @@
 
         /* Small Mobile View */
         @media (max-width: 480px) {
+            header img {
+                height: 50px !important;
+            }
+
             .hero-text {
-                margin: -40px 15px 0 15px;
+                margin-right: 15px;
                 padding: 18px;
             }
 
@@ -292,8 +293,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         /* Accessibility Improvements */
@@ -303,6 +309,7 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
+
             .hero-text,
             .hero img,
             .cta-button {
@@ -321,8 +328,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <img src="https://spentacorporation.com/wp-content/uploads/2024/08/Altavista-Homepage-banner.jpg"
-            alt="Modern luxury building showcasing Spenta Corporation's architectural excellence"
-            loading="eager">
+            alt="Modern luxury building showcasing Spenta Corporation's architectural excellence" loading="eager">
         <div class="hero-text">
             <p>Designing timeless, luxurious spaces that redefine modern architecture &amp; living.</p>
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://spentacorporation.com"
@@ -353,15 +359,15 @@
                 .then(data => document.getElementById(id).innerHTML = data)
                 .catch(error => console.log('Error loading', file, ':', error));
         }
-        
+
         // Load components
         loadHTML("header", "header.html");
         loadHTML("footer", "footer.html");
 
         // Add smooth loading effect
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const heroImg = document.querySelector('.hero img');
-            heroImg.onload = function() {
+            heroImg.onload = function () {
                 this.style.opacity = '1';
             };
         });
