@@ -400,6 +400,269 @@
             font-size: 14px;
             color: #6b7280;
         }
+
+        /* Responsive Fixes from CIF */
+        @media (max-width: 1024px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                border-right: 0;
+                border-bottom: 1px solid var(--border);
+                padding: 16px 20px;
+            }
+
+            .steps-wrap {
+                flex-direction: row;
+                justify-content: center;
+                overflow-x: hidden !important;
+            }
+
+            .step {
+                min-width: auto !important;
+                width: 100% !important;
+            }
+
+            .grid.cols-3,
+            .grid.cols-2 {
+                grid-template-columns: 1fr 1fr 1fr !important;
+                gap: 14px;
+            }
+
+            .form {
+                padding: 20px !important;
+            }
+
+            .field,
+            select,
+            textarea {
+                max-width: 100% !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px 24px;
+            }
+
+            .brand-row {
+                gap: 16px;
+                margin-bottom: 10px;
+            }
+
+            .brand-row img {
+                height: 65px;
+            }
+
+            .title {
+                font-size: 28px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+
+            .form {
+                padding: 24px 28px 28px;
+            }
+
+            .steps {
+                padding: 14px 18px;
+            }
+
+            .step {
+                min-width: 200px;
+                padding: 8px 10px;
+            }
+
+            .badge {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            .label {
+                font-size: 13px;
+            }
+
+            .cols-2,
+            .cols-3 {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .radio-group.cols-2,
+            .radio-group.cols-3,
+            .radio-group.cols-4,
+            .radio-group.cols-6,
+            .checkbox-group {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .dec {
+                right: 16px;
+            }
+
+            .dec div:first-child {
+                width: 22px;
+                height: 22px;
+            }
+
+            .dec div:last-child {
+                width: 32px;
+                height: 32px;
+            }
+
+            .section h3 {
+                font-size: 20px;
+                margin-bottom: 16px;
+            }
+
+            .field,
+            select,
+            textarea {
+                padding: 11px 12px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .card {
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .header {
+                padding: 18px 20px;
+                border-radius: 0;
+            }
+
+            .brand-row img {
+                height: 55px;
+            }
+
+            .title {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 13px;
+            }
+
+            .form {
+                padding: 20px;
+            }
+
+            .steps {
+                padding: 12px 16px;
+            }
+
+            .step {
+                min-width: 180px;
+                padding: 8px;
+            }
+
+            .badge {
+                width: 26px;
+                height: 26px;
+                font-size: 11px;
+            }
+
+            .label {
+                font-size: 12px;
+            }
+
+            .section h3 {
+                font-size: 18px;
+                margin-bottom: 14px;
+            }
+
+            label {
+                font-size: 13px;
+                margin: 6px 0 6px;
+            }
+
+            .field,
+            select,
+            textarea {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            .btn {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .dec {
+                display: none;
+            }
+
+            .main {
+                grid-template-columns: 1fr !important;
+            }
+
+            .steps-wrap {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                overflow-x: visible !important;
+            }
+
+            .step {
+                width: 100% !important;
+                min-width: unset !important;
+            }
+
+            .grid.cols-3,
+            .grid.cols-2,
+            .radio-group.cols-2,
+            .radio-group.cols-3,
+            .radio-group.cols-4,
+            .radio-group.cols-6,
+            .checkbox-group {
+                grid-template-columns: 1fr !important;
+            }
+
+            html,
+            body {
+                overflow-x: hidden !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-row {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 12px;
+                text-align: left;
+            }
+
+            .brand-row img {
+                height: 50px;
+                align-self: center;
+            }
+
+            .title {
+                font-size: 22px;
+                text-align: center;
+            }
+
+            .subtitle {
+                font-size: 12px;
+                text-align: center;
+            }
+
+            .step {
+                min-width: 160px;
+            }
+
+            .radio-group label,
+            .checkbox-group label {
+                font-size: 13px;
+            }
+        }
     </style>
 </head>
 
@@ -492,9 +755,12 @@
                                 <div>
                                     <label class="required">Customer Gender</label>
                                     <div class="radio-group cols-3">
-                                        <label><input type="radio" name="customerGender" value="male" required> Male</label>
-                                        <label><input type="radio" name="customerGender" value="female" required> Female</label>
-                                        <label><input type="radio" name="customerGender" value="family" required> Family</label>
+                                        <label><input type="radio" name="customerGender" value="male" required>
+                                            Male</label>
+                                        <label><input type="radio" name="customerGender" value="female" required>
+                                            Female</label>
+                                        <label><input type="radio" name="customerGender" value="family" required>
+                                            Family</label>
                                     </div>
                                     <div class="error-message">Please select customer gender</div>
                                 </div>
@@ -526,8 +792,10 @@
                             <div>
                                 <label class="required">Lead Classification</label>
                                 <div class="radio-group cols-2">
-                                    <label><input type="radio" name="leadClassification" value="open" required> Open</label>
-                                    <label><input type="radio" name="leadClassification" value="closed" required> Closed</label>
+                                    <label><input type="radio" name="leadClassification" value="open" required>
+                                        Open</label>
+                                    <label><input type="radio" name="leadClassification" value="closed" required>
+                                        Closed</label>
                                 </div>
                                 <div class="error-message">Please select lead classification</div>
                             </div>
@@ -540,24 +808,31 @@
 
                         <div class="form-group">
                             <h4>Customer's Current Residence:</h4>
-                            
+
                             <div class="grid cols-2">
                                 <div>
                                     <label class="required">Configuration</label>
                                     <div class="radio-group cols-4">
-                                        <label><input type="radio" name="currentConfig" value="1bhk" required> 1 BHK</label>
-                                        <label><input type="radio" name="currentConfig" value="2bhk" required> 2 BHK</label>
-                                        <label><input type="radio" name="currentConfig" value="3bhk" required> 3 BHK</label>
-                                        <label><input type="radio" name="currentConfig" value="4bhk" required> 4 BHK</label>
+                                        <label><input type="radio" name="currentConfig" value="1bhk" required> 1
+                                            BHK</label>
+                                        <label><input type="radio" name="currentConfig" value="2bhk" required> 2
+                                            BHK</label>
+                                        <label><input type="radio" name="currentConfig" value="3bhk" required> 3
+                                            BHK</label>
+                                        <label><input type="radio" name="currentConfig" value="4bhk" required> 4
+                                            BHK</label>
                                     </div>
                                     <div class="error-message">Please select current configuration</div>
                                 </div>
                                 <div>
                                     <label class="required">Ownership</label>
                                     <div class="radio-group cols-3">
-                                        <label><input type="radio" name="ownership" value="owned" required> Owned</label>
-                                        <label><input type="radio" name="ownership" value="self-owned" required> Self-Owned</label>
-                                        <label><input type="radio" name="ownership" value="rented" required> Rented</label>
+                                        <label><input type="radio" name="ownership" value="owned" required>
+                                            Owned</label>
+                                        <label><input type="radio" name="ownership" value="self-owned" required>
+                                            Self-Owned</label>
+                                        <label><input type="radio" name="ownership" value="rented" required>
+                                            Rented</label>
                                     </div>
                                     <div class="error-message">Please select ownership type</div>
                                 </div>
@@ -565,8 +840,8 @@
 
                             <div style="margin-top: 16px;">
                                 <label for="plot" class="required">Plot</label>
-                                <input class="field" type="text" id="plot" name="plot"
-                                    placeholder="Enter plot details" required />
+                                <input class="field" type="text" id="plot" name="plot" placeholder="Enter plot details"
+                                    required />
                                 <div class="error-message">Please enter plot details</div>
                             </div>
 
@@ -591,7 +866,7 @@
 
                         <div class="form-group">
                             <h4>Customer's Desired Requirement:</h4>
-                            
+
                             <div>
                                 <label for="areaLooking" class="required">Area of flat customer is looking for</label>
                                 <textarea class="field" id="areaLooking" name="areaLooking" rows="3"
@@ -603,9 +878,12 @@
                                 <div>
                                     <label class="required">Source of Funding</label>
                                     <div class="radio-group">
-                                        <label><input type="radio" name="fundingSource" value="self-funding" required> Self-Funding</label>
-                                        <label><input type="radio" name="fundingSource" value="current-property-sale" required> Current Property Sale</label>
-                                        <label><input type="radio" name="fundingSource" value="loan" required> Loan</label>
+                                        <label><input type="radio" name="fundingSource" value="self-funding" required>
+                                            Self-Funding</label>
+                                        <label><input type="radio" name="fundingSource" value="current-property-sale"
+                                                required> Current Property Sale</label>
+                                        <label><input type="radio" name="fundingSource" value="loan" required>
+                                            Loan</label>
                                     </div>
                                     <div class="error-message">Please select funding source</div>
                                 </div>
@@ -633,7 +911,7 @@
 
                         <div class="form-group">
                             <h4>Additional Information:</h4>
-                            
+
                             <div>
                                 <label for="otherProjects">Other Projects Considered By The Customer</label>
                                 <textarea class="field" id="otherProjects" name="otherProjects" rows="4"
@@ -782,9 +1060,9 @@
             });
 
             // Handle form submission
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', function (e) {
                 e.preventDefault();
-                
+
                 if (validateFields(currentStep)) {
                     const formData = new FormData(form);
                     const data = {};
@@ -795,7 +1073,7 @@
 
                     console.log('Assessment Form Submitted:', data);
                     alert('Assessment saved successfully!');
-                    
+
                     // You can send the data to the server here
                     // window.location.href = 'thankyou.html';
                 } else {
