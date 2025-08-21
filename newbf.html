@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Booking Application Form</title>
+    <style>
+      :root {
+        --gold: #f0c24f;
+        --ink: #222;
+        --muted: #6e6e6e;
+        --rule: #9e9e9e;
+        --frame: #f3cc69;
+        --bg: #000000;
+        --red: #e21c22;
+      } /* Page canvas */
+      html,
+      body {
+        background: var(--bg);
+        margin: 0;
+      }
+      .page {
+        width: 820px;
+        margin: 22px auto;
+        background: #fff;
+        border: 6px solid var(--gold);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      }
+      .frame {
+        margin: 10px;
+        border: 1px solid var(--frame);
+        padding: 18px 22px 26px;
+      } /* Title */
+      .title {
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 700;
+        color: var(--ink);
+        letter-spacing: 0.5px;
+        margin: 6px 0 14px;
+        text-transform: uppercase;
+      } /* Helpers */
+      .row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .row.cols-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+      .row.cols-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .row.cols-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .label {
+        font: 500 14px/1.2 Arial, sans-serif;
+        color: var(--ink);
+      }
+      .muted {
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .section-head {
+        font: 700 12px/1.2 Arial, sans-serif;
+        color: #000;
+        margin: 14px 0 6px;
+      } /* Rule-line inputs */
+      .line {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid var(--rule);
+        padding: 2px 4px 3px;
+        font: 500 12px/1.2 Arial, sans-serif;
+        color: #000;
+        outline: none;
+        background: transparent;
+      }
+      .line::placeholder {
+        color: #bdbdbd;
+        font-weight: 500;
+      }
+      .inline {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        font: 500 14px/1.2 Arial, sans-serif;
+        color: #000;
+      }
+      .inline .line {
+        flex: 1 1 120px;
+      } /* Check groups (square like screenshot) */
+      .checks {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .checks label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font: 500 12px Arial, sans-serif;
+      }
+      .checks input[type="checkbox"],
+      .checks input[type="radio"] {
+        appearance: none;
+        width: 12px;
+        height: 12px;
+        border: 1px solid #444;
+        display: inline-block;
+        position: relative;
+        margin: 0;
+        border-radius: 2px;
+        background: #fff;
+      }
+      .checks input[type="radio"] {
+        border-radius: 50%;
+      }
+      .checks input:checked::after {
+        content: "";
+        position: absolute;
+        inset: 2px;
+        background: #222;
+      } /* Character boxes (DOB, PAN, Aadhaar) */
+      .char-grid {
+        display: grid;
+        gap: 4px;
+        align-items: center;
+        --size: 20px;
+      }
+      .char-grid.ddmmyyyy {
+        grid-template-columns: repeat(10, var(--size));
+      } /* dd / mm / yyyy + 2 dividers */
+      .char-grid.pan {
+        grid-template-columns: repeat(10, var(--size));
+      }
+      .char-grid.aadhaar {
+        grid-template-columns: repeat(12, var(--size));
+      }
+      .char {
+        width: var(--size);
+        height: var(--size);
+        border: 1px solid #444;
+        text-align: center;
+        font: 500 12px/1 Arial, sans-serif;
+        outline: none;
+        background: transparent;
+      }
+      .divider {
+        width: 12px;
+        text-align: center;
+        font: 700 12px/1 Arial, sans-serif;
+        color: #444;
+      } /* Multi-line address */
+      .multiline {
+        height: 42px;
+        border: none;
+        border-bottom: 1px solid var(--rule);
+        resize: none;
+        outline: none;
+        font: 500 12px Arial, sans-serif;
+        background: transparent;
+      } /* Red badges/bars and boxes */
+      .red-chip {
+        border: 1px solid var(--red);
+        color: var(--red);
+        font: 500 11px/1.4 Arial, sans-serif;
+        padding: 6px 8px;
+        display: inline-block;
+        white-space: nowrap;
+      }
+      .add-btn {
+        display: inline-block;
+        padding: 6px 10px;
+        margin: 8px 0 10px;
+        border: 1px solid var(--red);
+        color: var(--red);
+        background: #fff;
+        font: 700 11px Arial, sans-serif;
+        cursor: pointer;
+        user-select: none;
+        text-align: center;
+        width: 100%;
+      }
+      .applicant-box {
+        border: 1px solid var(--red);
+        padding: 10px 12px;
+        margin: 10px 0;
+      }
+      .applicant-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 6px;
+      }
+      .applicant-head .note {
+        color: var(--red);
+        font: 700 11px Arial, sans-serif;
+      } /* Grid-fit (label + input line) */
+      .grid-fit {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 8px;
+        align-items: center;
+      }
+      .grid-fit > .label {
+        white-space: nowrap;
+      } /* Channel partner + signatures */
+      .underline-holder {
+        display: inline-block;
+        min-width: 280px;
+        border-bottom: 1px solid var(--rule);
+        height: 16px;
+      }
+      .row.cols-21 {
+        grid-template-columns: 1fr;
+      }
+      .grid-fit-21 {
+        display: flex;
+      }
+      .section-head-term {
+        font: 700 17px / 1.2 Arial, sans-serif;
+        color: #000;
+        margin: 70px 0 26px;
+        text-align: center;
+        border-top: 1px solid #000;
+        padding-top: 80px;
+      }
+      .terms {
+        font: 400 13px/1.6 Arial, sans-serif;
+        color: #000;
+        margin-top: 10px;
+      }
+      .terms p {
+        margin: 6px 0;
+        text-align: justify;
+      }
+      /* Print */
+      @media print {
+        body {
+          background: #fff;
+        }
+        .page {
+          box-shadow: none;
+          margin: 0 auto;
+        }
+        .add-btn {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="frame">
+        <h2 class="title">BOOKING APPLICATION FORM</h2>
+        <!-- Project row -->
+        <div class="row cols-2" style="align-items: center">
+          <div class="grid-fit">
+            <div class="label">Project Name:</div>
+            <input class="line" />
+          </div>
+          <div style="text-align: right">
+            <span class="red-chip"
+              >Customized form will open as per selected project</span
+            >
+          </div>
+        </div>
+        <div class="grid-fit" style="margin-top: 10px">
+          <div class="label">Application Date:</div>
+          <input class="line" type="date" style="max-width: 100px;">
+        </div>
+        <!-- Booking for flat -->
+        <div class="section-head">BOOKING APPLICATION FOR THE FLAT:</div>
+        <div class="inline">
+          <span>Flat No.:</span><input class="line" style="max-width: 60px" />
+          <span>Floor:</span><input class="line" style="max-width: 60px" />
+          <span>RERA Carpet Area:</span>
+          <input class="line" style="max-width: 60px" /><span class="muted"
+            >Sq.ft</span
+          >
+          <span>Exclusive Deck/ Balcony:</span
+          ><input class="line" style="max-width: 60px" /><span class="muted"
+            >Sq.ft</span
+          >
+        </div>
+        <div class="inline" style="margin-top: 6px">
+          <span>No. of car parking(s):</span
+          ><input class="line" style="max-width: 160px" />
+        </div>
+        <div class="inline" style="margin-top: 6px">
+          <span>Total Purchase Price:</span><input class="line" />
+        </div>
+        <div class="inline" style="margin-top: 6px">
+            <span>(in words): Rupees</span><input class="line" />
+        </div>
+        <div class="label" style="margin-top: 10px">
+          Kindly refer to Annexure ‘A’ for payment schedule.
+        </div>
+        <div class="grid-fit" style="margin-top: 8px">
+          <div class="label">Source of Funds:</div>
+          <div class="checks">
+            <label><input type="checkbox" /> Self Financed</label>
+            <label><input type="checkbox" /> Housing Loan</label>
+          </div>
+        </div>
+        <!-- 1st Applicant -->
+        <div class="section-head" style="margin-top: 16px">
+          1<sup>st</sup> APPLICANT DETAILS
+        </div>
+        <div class="inline">
+          <span>Mr./Ms./Mrs.:</span
+          ><input class="line" style="min-width: 60px" />
+          <span>Middle Name:</span
+          ><input class="line" style="min-width: 60px" /> <span>Last Name:</span
+          ><input class="line" style="min-width: 60px" />
+        </div>
+        <div class="row cols-2" style="margin-top: 6px">
+          <div class="inline" style="align-items: center">
+            <span>Date of Birth:</span>
+            <div class="char-grid ddmmyyyy">
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+              <div class="divider">/</div>
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+              <div class="divider">/</div>
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+            </div>
+          </div>
+          <div class="inline">
+            <span>Date of Anniversary:</span>
+            <div class="char-grid ddmmyyyy">
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+              <div class="divider">/</div>
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+              <div class="divider">/</div>
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="inline" style="margin-top: 6px">
+          <span>‘Marital Status’:</span>
+          <div class="checks">
+            <label><input type="checkbox" /> Married</label>
+            <label><input type="checkbox" /> Unmarried</label>
+            <label><input type="checkbox" /> Other</label>
+          </div>
+        </div>
+        <div class="row cols-2" style="margin-top: 6px">
+          <div class="inline">
+            <span>‘Pan No.’:</span>
+            <div class="char-grid pan">
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" />
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" />
+            </div>
+          </div>
+          <div class="inline">
+            <span>‘Sex’:</span>
+            <div class="checks">
+              <label><input type="checkbox" /> Male</label>
+              <label><input type="checkbox" /> Female</label>
+              <label><input type="checkbox" /> Others</label>
+            </div>
+          </div>
+        </div>
+        <div class="inline" style="margin-top: 6px">
+          <span>‘Aadhar Card No.’:</span>
+          <div class="char-grid aadhaar">
+            <input class="char" maxlength="1" /><input
+              class="char"
+              maxlength="1"
+            /><input class="char" maxlength="1" /><input
+              class="char"
+              maxlength="1"
+            />
+            <input class="char" maxlength="1" /><input
+              class="char"
+              maxlength="1"
+            /><input class="char" maxlength="1" /><input
+              class="char"
+              maxlength="1"
+            />
+            <input class="char" maxlength="1" /><input
+              class="char"
+              maxlength="1"
+            /><input class="char" maxlength="1" /><input
+              class="char"
+              maxlength="1"
+            />
+          </div>
+        </div>
+        <div class="inline" style="margin-top: 6px">
+          <span>‘Residential Status’:</span>
+          <div class="checks">
+            <label><input type="checkbox" /> Indian</label>
+            <label><input type="checkbox" /> NRI</label>
+            <label><input type="checkbox" /> PIO</label>
+            <label><input type="checkbox" /> OCI</label>
+          </div>
+        </div>
+        <div class="grid-fit" style="margin-top: 6px">
+          <div class="label">‘Residential Address’:</div>
+          <textarea class="multiline"></textarea>
+        </div>
+        <div class="row cols-4" style="margin-top: 6px">
+          <div class="grid-fit">
+            <div class="label">‘City’:</div>
+            <input class="line" />
+          </div>
+          <div class="grid-fit">
+            <div class="label">‘Pin’:</div>
+            <input class="line" />
+          </div>
+          <div class="grid-fit">
+            <div class="label">‘State’:</div>
+            <input class="line" />
+          </div>
+          <div class="grid-fit">
+            <div class="label">‘Country’:</div>
+            <input class="line" />
+          </div>
+        </div>
+        <div class="grid-fit" style="margin-top: 6px">
+          <div class="label">‘Correspondence Address’:</div>
+          <textarea class="multiline"></textarea>
+        </div>
+        <div class="row cols-3" style="margin-top: 6px">
+          <div class="grid-fit">
+            <div class="label">‘Contact No.: Residence’:</div>
+            <input class="line" />
+          </div>
+          <div class="grid-fit">
+            <div class="label">‘Office’:</div>
+            <input class="line" />
+          </div>
+          <div class="grid-fit">
+            <div class="label">‘Mobile’:</div>
+            <input class="line" />
+          </div>
+        </div>
+        <div class="grid-fit" style="margin-top: 6px">
+          <div class="label">‘E-mail id’:</div>
+          <input class="line" />
+        </div>
+        <div class="row cols-2" style="margin-top: 6px">
+          <div class="grid-fit">
+            <div class="label">‘Employment Type:’</div>
+            <div class="checks">
+              <label><input type="checkbox" /> Salaried</label>
+              <label><input type="checkbox" /> Self Employed</label>
+            </div>
+          </div>
+          <div class="grid-fit">
+            <div class="label">‘Company Name’:</div>
+            <input class="line" />
+          </div>
+        </div>
+        <div class="grid-fit" style="margin-top: 6px">
+          <div class="label">‘Profession / Job Title’:</div>
+          <input class="line" />
+        </div>
+        <!-- Add Applicants button -->
+        <div id="addBtn" class="add-btn">Add a tab name “ADD APPLICANTS”</div>
+        <!-- Applicant 2 (red box + note) -->
+        <div id="app2" class="applicant-box" style="display: none">
+          <div class="applicant-head">
+            <div class="section-head" style="margin: 0">
+              2<sup>nd</sup> APPLICANT DETAILS
+            </div>
+            <div class="note">
+              This section only comes if Add applicant is selected
+            </div>
+          </div>
+          <!-- same fields: -->
+          <div class="inline">
+            <span>Mr./Ms./Mrs.:</span
+            ><input class="line" style="min-width: 60px" />
+            <span>Middle Name:</span
+            ><input class="line" style="min-width: 60px" />
+            <span>Last Name:</span
+            ><input class="line" style="min-width: 60px" />
+          </div>
+          <div class="row cols-2" style="margin-top: 6px">
+            <div class="inline" style="align-items: center">
+              <span>‘Date of Birth’:</span>
+              <div class="char-grid ddmmyyyy">
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+                <div class="divider">/</div>
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+                <div class="divider">/</div>
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+              </div>
+            </div>
+            <div class="inline">
+              <span>Date of Anniversary:</span>
+              <div class="char-grid ddmmyyyy">
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+                <div class="divider">/</div>
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+                <div class="divider">/</div>
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="inline" style="margin-top: 6px">
+            <span>‘Marital Status’:</span>
+            <div class="checks">
+              <label><input type="checkbox" /> Married</label>
+              <label><input type="checkbox" /> Unmarried</label>
+              <label><input type="checkbox" /> Other</label>
+            </div>
+          </div>
+          <div class="row cols-2" style="margin-top: 6px">
+            <div class="inline">
+              <span>‘Pan No.’:</span>
+              <div class="char-grid pan">
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" />
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" />
+              </div>
+            </div>
+            <div class="inline">
+              <span>‘Sex’:</span>
+              <div class="checks">
+                <label><input type="checkbox" /> Male</label>
+                <label><input type="checkbox" /> Female</label>
+                <label><input type="checkbox" /> Others</label>
+              </div>
+            </div>
+          </div>
+          <div class="inline" style="margin-top: 6px">
+            <span>‘Aadhar Card No.’:</span>
+            <div class="char-grid aadhaar">
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+            </div>
+          </div>
+          <div class="inline" style="margin-top: 6px">
+            <span>‘Residential Status’:</span>
+            <div class="checks">
+              <label><input type="checkbox" /> Indian</label>
+              <label><input type="checkbox" /> NRI</label>
+              <label><input type="checkbox" /> PIO</label>
+              <label><input type="checkbox" /> OCI</label>
+            </div>
+          </div>
+          <div class="grid-fit" style="margin-top: 6px">
+            <div class="label">‘Residential Address’:</div>
+            <textarea class="multiline"></textarea>
+          </div>
+          <div class="row cols-4" style="margin-top: 6px">
+            <div class="grid-fit">
+              <div class="label">‘City’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Pin’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘State’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Country’:</div>
+              <input class="line" />
+            </div>
+          </div>
+          <div class="grid-fit" style="margin-top: 6px">
+            <div class="label">‘Correspondence Address’:</div>
+            <textarea class="multiline"></textarea>
+          </div>
+          <div class="row cols-3" style="margin-top: 6px">
+            <div class="grid-fit">
+              <div class="label">‘Contact No.: Residence’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Office’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Mobile’:</div>
+              <input class="line" />
+            </div>
+          </div>
+          <div class="grid-fit" style="margin-top: 6px">
+            <div class="label">‘E-mail id’:</div>
+            <input class="line" />
+          </div>
+          <div class="row cols-2" style="margin-top: 6px">
+            <div class="grid-fit">
+              <div class="label">‘Employment Type:’</div>
+              <div class="checks">
+                <label><input type="checkbox" /> Salaried</label>
+                <label><input type="checkbox" /> Self Employed</label>
+              </div>
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Company Name’:</div>
+              <input class="line" />
+            </div>
+          </div>
+          <div class="grid-fit" style="margin-top: 6px">
+            <div class="label">‘Profession / Job Title’:</div>
+            <input class="line" />
+          </div>
+        </div>
+        <!-- Applicant 3 (red box + note) -->
+        <div id="app3" class="applicant-box" style="display: none">
+          <div class="applicant-head">
+            <div class="section-head" style="margin: 0">
+              3<sup>rd</sup> APPLICANT DETAILS
+            </div>
+            <div class="note">
+              This section only comes if Add applicant is selected
+            </div>
+          </div>
+          <!-- identical fields to app2 -->
+          <div class="inline">
+            <span>Mr./Ms./Mrs.:</span
+            ><input class="line" style="min-width: 60px" />
+            <span>Middle Name:</span
+            ><input class="line" style="min-width: 60px" />
+            <span>Last Name:</span
+            ><input class="line" style="min-width: 60px" />
+          </div>
+          <div class="row cols-2" style="margin-top: 6px">
+            <div class="inline" style="align-items: center">
+              <span>‘Date of Birth’:</span>
+              <div class="char-grid ddmmyyyy">
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+                <div class="divider">/</div>
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+                <div class="divider">/</div>
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+              </div>
+            </div>
+            <div class="inline">
+              <span>Date of Anniversary:</span>
+              <div class="char-grid ddmmyyyy">
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+                <div class="divider">/</div>
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+                <div class="divider">/</div>
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="inline" style="margin-top: 6px">
+            <span>‘Marital Status’:</span>
+            <div class="checks">
+              <label><input type="checkbox" /> Married</label>
+              <label><input type="checkbox" /> Unmarried</label>
+              <label><input type="checkbox" /> Other</label>
+            </div>
+          </div>
+          <div class="row cols-2" style="margin-top: 6px">
+            <div class="inline">
+              <span>‘Pan No.’:</span>
+              <div class="char-grid pan">
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" />
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" />
+              </div>
+            </div>
+            <div class="inline">
+              <span>‘Sex’:</span>
+              <div class="checks">
+                <label><input type="checkbox" /> Male</label>
+                <label><input type="checkbox" /> Female</label>
+                <label><input type="checkbox" /> Others</label>
+              </div>
+            </div>
+          </div>
+          <div class="inline" style="margin-top: 6px">
+            <span>‘Aadhar Card No.’:</span>
+            <div class="char-grid aadhaar">
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+            </div>
+          </div>
+          <div class="inline" style="margin-top: 6px">
+            <span>‘Residential Status’:</span>
+            <div class="checks">
+              <label><input type="checkbox" /> Indian</label>
+              <label><input type="checkbox" /> NRI</label>
+              <label><input type="checkbox" /> PIO</label>
+              <label><input type="checkbox" /> OCI</label>
+            </div>
+          </div>
+          <div class="grid-fit" style="margin-top: 6px">
+            <div class="label">‘Residential Address’:</div>
+            <textarea class="multiline"></textarea>
+          </div>
+          <div class="row cols-4" style="margin-top: 6px">
+            <div class="grid-fit">
+              <div class="label">‘City’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Pin’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘State’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Country’:</div>
+              <input class="line" />
+            </div>
+          </div>
+          <div class="grid-fit" style="margin-top: 6px">
+            <div class="label">‘Correspondence Address’:</div>
+            <textarea class="multiline"></textarea>
+          </div>
+          <div class="row cols-3" style="margin-top: 6px">
+            <div class="grid-fit">
+              <div class="label">‘Contact No.: Residence’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Office’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Mobile’:</div>
+              <input class="line" />
+            </div>
+          </div>
+          <div class="grid-fit" style="margin-top: 6px">
+            <div class="label">‘E-mail id’:</div>
+            <input class="line" />
+          </div>
+          <div class="row cols-2" style="margin-top: 6px">
+            <div class="grid-fit">
+              <div class="label">‘Employment Type:’</div>
+              <div class="checks">
+                <label><input type="checkbox" /> Salaried</label>
+                <label><input type="checkbox" /> Self Employed</label>
+              </div>
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Company Name’:</div>
+              <input class="line" />
+            </div>
+          </div>
+          <div class="grid-fit" style="margin-top: 6px">
+            <div class="label">‘Profession / Job Title’:</div>
+            <input class="line" />
+          </div>
+        </div>
+        <!-- Applicant 4 (red box + note) -->
+        <div id="app4" class="applicant-box" style="display: none">
+          <div class="applicant-head">
+            <div class="section-head" style="margin: 0">
+              4<sup>th</sup> APPLICANT DETAILS
+            </div>
+            <div class="note">
+              This section only comes if Add applicant is selected
+            </div>
+          </div>
+          <!-- identical fields to app2/app3 -->
+          <div class="inline">
+            <span>Mr./Ms./Mrs.:</span
+            ><input class="line" style="min-width: 60px" />
+            <span>Middle Name:</span
+            ><input class="line" style="min-width: 60px" />
+            <span>Last Name:</span
+            ><input class="line" style="min-width: 60px" />
+          </div>
+          <div class="row cols-2" style="margin-top: 6px">
+            <div class="inline" style="align-items: center">
+              <span>‘Date of Birth’:</span>
+              <div class="char-grid ddmmyyyy">
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+                <div class="divider">/</div>
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+                <div class="divider">/</div>
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+              </div>
+            </div>
+            <div class="inline">
+              <span>Date of Anniversary:</span>
+              <div class="char-grid ddmmyyyy">
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+                <div class="divider">/</div>
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+                <div class="divider">/</div>
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="inline" style="margin-top: 6px">
+            <span>‘Marital Status’:</span>
+            <div class="checks">
+              <label><input type="checkbox" /> Married</label>
+              <label><input type="checkbox" /> Unmarried</label>
+              <label><input type="checkbox" /> Other</label>
+            </div>
+          </div>
+          <div class="row cols-2" style="margin-top: 6px">
+            <div class="inline">
+              <span>‘Pan No.’:</span>
+              <div class="char-grid pan">
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" />
+                <input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" /><input
+                  class="char"
+                  maxlength="1"
+                /><input class="char" maxlength="1" />
+              </div>
+            </div>
+            <div class="inline">
+              <span>‘Sex’:</span>
+              <div class="checks">
+                <label><input type="checkbox" /> Male</label>
+                <label><input type="checkbox" /> Female</label>
+                <label><input type="checkbox" /> Others</label>
+              </div>
+            </div>
+          </div>
+          <div class="inline" style="margin-top: 6px">
+            <span>‘Aadhar Card No.’:</span>
+            <div class="char-grid aadhaar">
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+              <input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              /><input class="char" maxlength="1" /><input
+                class="char"
+                maxlength="1"
+              />
+            </div>
+          </div>
+          <div class="inline" style="margin-top: 6px">
+            <span>‘Residential Status’:</span>
+            <div class="checks">
+              <label><input type="checkbox" /> Indian</label>
+              <label><input type="checkbox" /> NRI</label>
+              <label><input type="checkbox" /> PIO</label>
+              <label><input type="checkbox" /> OCI</label>
+            </div>
+          </div>
+          <div class="grid-fit" style="margin-top: 6px">
+            <div class="label">‘Residential Address’:</div>
+            <textarea class="multiline"></textarea>
+          </div>
+          <div class="row cols-4" style="margin-top: 6px">
+            <div class="grid-fit">
+              <div class="label">‘City’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Pin’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘State’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Country’:</div>
+              <input class="line" />
+            </div>
+          </div>
+          <div class="grid-fit" style="margin-top: 6px">
+            <div class="label">‘Correspondence Address’:</div>
+            <textarea class="multiline"></textarea>
+          </div>
+          <div class="row cols-3" style="margin-top: 6px">
+            <div class="grid-fit">
+              <div class="label">‘Contact No.: Residence’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Office’:</div>
+              <input class="line" />
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Mobile’:</div>
+              <input class="line" />
+            </div>
+          </div>
+          <div class="grid-fit" style="margin-top: 6px">
+            <div class="label">‘E-mail id’:</div>
+            <input class="line" />
+          </div>
+          <div class="row cols-2" style="margin-top: 6px">
+            <div class="grid-fit">
+              <div class="label">‘Employment Type:’</div>
+              <div class="checks">
+                <label><input type="checkbox" /> Salaried</label>
+                <label><input type="checkbox" /> Self Employed</label>
+              </div>
+            </div>
+            <div class="grid-fit">
+              <div class="label">‘Company Name’:</div>
+              <input class="line" />
+            </div>
+          </div>
+          <div class="grid-fit" style="margin-top: 6px">
+            <div class="label">‘Profession / Job Title’:</div>
+            <input class="line" />
+          </div>
+        </div>
+        <!-- Channel Partner & Signatures -->
+        <div class="section-head" style="margin-top: 16px">
+          INCASE OF CHANNEL PARTNER
+        </div>
+        <div class="grid-fit">
+          <div class="label">Name of the Channel Partner:</div>
+          <input class="line" />
+        </div>
+        <div class="grid-fit" style="margin-top: 6px">
+          <div class="label">Channel Partner MahaRERA Registration Number:</div>
+          <input class="line" />
+        </div>
+        <div class="row cols-2" style="margin-top: 6px">
+          <div class="grid-fit">
+            <div class="label">Mobile no.:</div>
+            <input class="line" />
+          </div>
+          <div class="grid-fit">
+            <div class="label">E-mail ID:</div>
+            <input class="line" />
+          </div>
+        </div>
+        <div class="grid-fit" style="margin-top: 10px">
+          <div class="label">Signature of Channel Partner:</div>
+          <span class="underline-holder"></span>
+        </div>
+        <div class="grid-fit" style="margin-top: 22px">
+          <div class="label">Customer Signature:</div>
+          <span class="underline-holder" style="max-width: 100px;"></span>
+        </div>
+
+        <!-- SOURCE OF BOOKING -->
+        <div class="section-head">SOURCE OF BOOKING</div>
+        <div class="row cols-2">
+          <label class="inline"><input type="checkbox" /> Direct</label>
+          <div class="grid-fit">
+            <div class="label">Please Specify:</div>
+            <input class="line" />
+          </div>
+        </div>
+
+        <!-- INCASE OF REFERRAL -->
+        <div class="section-head">INCASE OF REFERRAL</div>
+        <div class="row cols-21">
+          <div class="grid-fit">
+            <div class="label">Customer Name:</div>
+            <input class="line" />
+          </div>
+          <div class="grid-fit-21">
+            <div class="label">Project:</div>
+            <input class="line" style="max-width: 180px" />
+            <div class="label">Flat No.:</div>
+            <input class="line" style="max-width: 80px" />
+          </div>
+        </div>
+
+        <!-- TERMS AND CONDITIONS -->
+        <div class="section-head-term">TERMS AND CONDITIONS</div>
+        <div class="terms">
+          <p>
+            1) The Applicant/s hereby request to be registered for provisional
+            allotment of a Residential Apartment/Flat (as mentioned in this
+            Booking Application Form) in the Project known as
+            <b>‘Stardeous situated at Tardeo’</b>, to be developed by
+            <b>Heston Builders Pvt. Ltd.</b> hereinafter referred to as “The
+            Promoter” and will be customized as per the project selected.
+          </p>
+          <p>
+            2) The Applicant/s has/have clearly understood that this provisional
+            application for allotment and does not constitute a Letter of
+            Allotment or Agreement for Sale and that he/she/they do not become
+            entitled to the final allotment of the Residential Apartment
+            notwithstanding the fact that the Promoter may have issued a receipt
+            in acknowledgment of the monies received towards this provisional
+            application for allotment.
+          </p>
+          <p>
+            3) The Applicant/s has/have full knowledge of the rules, laws and
+            notification applicable to this area and in general, which have been
+            explained by the Promoter and understood by him/her/them.
+          </p>
+          <p>
+            4) The Applicant/s has/have satisfied himself/herself/themselves
+            about the interest and rights of the Promoter in the land on which
+            the said Project is being developed and understanding all
+            limitations and obligations in respect thereof. Hereafter no
+            complaint/objection on this account shall be entertained.
+          </p>
+          <p>
+            5) The Applicant/s agree that the Promoter shall have the right to
+            effect suitable change and necessary alterations in the layout plan,
+            if and when necessary, which may involve all or any of the changes,
+            namely change in location of the apartment, change in its number,
+            dimensions, height, size, area, layout or change of the entire
+            scheme as prescribed in RERA Act 2016 & MahaRERA Rules 2017.
+          </p>
+          <p>
+            6) The Applicant/s agree that the building plans and layout are
+            subject to changes and approval of the Municipal Corporation of
+            Greater Mumbai (MCGM) and any other authorities. The Promoter
+            reserves the right to make additions or amendments as may be
+            necessitated from time to time, as per RERA Act 2016 & MahaRERA
+            Rules 2017.
+          </p>
+          <p>
+            7) Eligibility for Application: <br />
+            a) Any person competent to enter into contract under the Indian
+            Contract Act, 1881 shall be eligible. <br />
+            b) If Applicant/s is NRI, PIO, OCI, Non-resident, Foreign National
+            or Foreign Company, then the Applicant/s shall be solely responsible
+            for complying with the necessary compliance/permissions as per the
+            Foreign Exchange Management Act, Reserve Bank of India Act and any
+            other rule, regulations guidelines etc. <br />
+            c) The Applicant must have a Permanent Account Number (PAN) allowed
+            under the provision of Income Tax Act 1961 or Form 60 and the same
+            must be quoted on this Booking Application Form.
+          </p>
+        </div>
+
+        <!-- CUSTOMER SIGNATURE -->
+        <div class="grid-fit" style="margin-top: 22px">
+          <div class="label">Customer Signature:</div>
+          <span class="underline-holder" style="max-width: 100px;"></span>
+        </div>
+
+        <div class="terms">
+            <p>
+                8) Application Procedure: <br />
+                a) A completed Booking Application Form shall be duly signed by
+                Applicant/s and submitted along with (i) self-attested address proof
+                (ii) PAN card of all Applicant/s and (iii) Cheque / Demand Draft/
+                Pay Order towards Application Money and taxes thereon as shown in
+                the Price Sheet and Payment Schedule annexed hereto as Annexure ‘A’.
+                <br />
+                b) On realization of the Application Money, the Promoter will issue
+                a Letter of Allotment detailing in brief the terms and conditions of
+                this transaction. In order to proceed with the purchase of the said
+                flat, the same will require to be accepted and duly signed by the
+                Applicant/s. <br />
+                c) On the realization of upto 10% of the Purchase Price by the
+                Promoter, the Applicant/s must execute and register the Agreement
+                for Sale in the Promoters standard format. The same shall be
+                completed within 60 days of this Booking Application Form. Kindly
+                note, forwarding this Booking Application Form to the Applicant/s by
+                the Promoter does not create any binding obligation on the part of
+                the Promoter.
+              </p>
+    
+              <p>
+                9) Further the Applicants/ agree that the Stamp Duty, Registration
+                charges, and any other government taxes, duties and charges
+                applicable for execution of the Agreement for Sale will be borne and
+                paid by the Applicant/s. Further, any liabilities arising out of
+                Sales Tax/VAT/GST or any other taxes dues and charges with respect
+                to this transaction, shall be paid by the Applicant/s immediately on
+                demand by the Promoter or the concerned authorities.
+              </p>
+    
+              <p>
+                10) The Applicant/s confirms that in addition to the Purchase Price,
+                he/she/they shall be liable to pay all government taxes, duties,
+                cesses etc. and Other Charges payable to the Promoter as are
+                detailed in Annexure ‘A’ herewith annexed.
+              </p>
+    
+              <p>
+                11) It is specifically agreed and confirmed by the Applicant/s that
+                the timely payment of the installments is the essence of this
+                transaction. Incase of delay or non-payment of any of the
+                installments or any other amounts, interest at State Bank of India
+                highest Marginal Rate Plus 2% will be charged on all outstanding
+                payments from the due date to the date of full realization. The
+                Promoter shall not be responsible for any delay in payments
+                pertaining to delays caused by the Applicant’s Bank, NBFC, HFC, etc.
+                for sanctioning or disbursing the Applicant’s housing loan.
+              </p>
+    
+              <p>
+                12) Incase of regular defaults and/or delayed payments, the Promoter
+                reserves the right to terminate this Booking Application by
+                providing 15 days notice. In case of termination, the Promoter shall
+                be entitled to forfeit the Application Money paid by the Applicant/s
+                at the time of this Booking Application.
+              </p>
+    
+              <p>
+                13) In case the Applicant/s wishes to cancel this Booking
+                Application, an amount mentioned in the Table hereunder written
+                would be deducted and the balance amount due and payable shall be
+                refunded to you without interest within 45 (forty five) days from
+                the date of receipt of your letter requesting to cancel this Booking
+                Application.
+              </p>
+    
+              <!-- Cancellation Table -->
+              <table
+                border="1"
+                cellspacing="0"
+                cellpadding="6"
+                style="width: 100%; border-collapse: collapse; font: 600 11px Arial, sans-serif; margin: 8px 0"
+              >
+                <thead style="background: #f0f0f0">
+                  <tr>
+                    <th style="text-align: center">Sr No.</th>
+                    <th>If the letter requesting to cancel the booking is received</th>
+                    <th>Amount to be deducted</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align: center">1.</td>
+                    <td>Within 15 days from issuance of the allotment letter</td>
+                    <td>Nil</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center">2.</td>
+                    <td>
+                      Within 16 to 30 days from issuance of the allotment letter
+                    </td>
+                    <td>1% of the purchase price of the said flat</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center">3.</td>
+                    <td>
+                      Within 31 to 60 days from issuance of the allotment letter
+                    </td>
+                    <td>1.5% of the purchase price of the said flat</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center">4.</td>
+                    <td>After 61 days from issuance of the allotment letter</td>
+                    <td>2% of the purchase price of the said flat</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center">5.</td>
+                    <td>
+                      After 91<sup>st</sup> day from issuance of the allotment
+                      letter
+                    </td>
+                    <td>5% of the purchase price of the said flat</td>
+                  </tr>
+                </tbody>
+              </table>
+    
+              <p>
+                14) The Applicant/s shall not be entitled to get the name
+                swapped/changed/deleted/substituted of the nominee in his/her/their
+                place without the prior written approval of the Promoter.
+              </p>
+    
+              <p>
+                15) The Promoter reserves the right for creation of charge, security,
+                encumbrances, securitization or other arrangements, at its sole
+                discretion, in respect of the project, structure and building being
+                developed and/or amount receivable from the Applicant/s, in relation
+                to the borrowing, credit facility or finance avails by the Promoter.
+                The Applicant/s hereby accords his/her/their irrevocable consent for
+                the aforesaid.
+              </p>
+            </div>
+    
+            <!-- CUSTOMER SIGNATURE -->
+            <div class="grid-fit" style="margin-top: 22px">
+              <div class="label">Customer Signature:</div>
+              <span class="underline-holder" style="max-width: 100px;"></span>
+            </div>
+
+            <div class="terms">
+                <p>
+                    16) The Applicant/s confirm that he/she/they will not be permitted
+                    to transfer/sell the apartment until all the outstanding dues
+                    payable by the Applicant/s to the Promoter are fully paid up.
+                  </p>
+        
+                  <p>
+                    17) The Applicant/s agree and confirm that all correspondence will
+                    be made with the first applicant at the address for correspondence
+                    on the Promoter’s record (indicated in this Booking Application
+                    Form). Any change in the Address/Email id/Contact no: will have to
+                    be notified in writing to the Promoter at its Corporate Office and
+                    acknowledgement obtained for such change, failing which all demand
+                    letters and notice posted to the original correspondence address
+                    will be deemed to have been served and the Applicant/s shall be
+                    responsible for default in payment and other consequences that might
+                    occur.
+                  </p>
+        
+                  <p>
+                    19) The Applicant/s shall from time to time sign all applications,
+                    paper, documents, maintenance agreement, electricity agreement and
+                    other relevant papers, as required, and to do all acts, deeds and
+                    things as the Promoter may require in the interest of the complex
+                    and Apartment/Flat owners. In case of joint Applicant/s, any
+                    document signed/accepted/acknowledgement by any one of the Applicant
+                    shall be binding upon the other Applicant/s.
+                  </p>
+        
+                  <p>
+                    20) The Applicant/s confirm/s that he/she does not have any
+                    objection for the Promoter sending communication via telephone or
+                    e-mail regarding its upcoming projects and related offers.
+                  </p>
+        
+                  <p>
+                    I/We have fully read, understood and agree to abide by the above
+                    mentioned terms and conditions stipulated by
+                    <b>Heston Builders Private Ltd.</b> <span style="color: red"
+                      >As per selected Project</span
+                    >
+                  </p>
+        
+                  <p>
+                    I/We remit herewith amounts towards ‘Application Money’ and ‘GST’ as
+                    stated in the table hereunder.
+                  </p>
+        
+                  <!-- Payment Table -->
+                  <table
+                    border="1"
+                    cellspacing="0"
+                    cellpadding="6"
+                    style="width: 100%; border-collapse: collapse; font: 600 11px Arial, sans-serif; margin: 8px 0"
+                  >
+                    <thead style="background: #f0f0f0">
+                      <tr>
+                        <th></th>
+                        <th style="text-align: center">Towards ‘Application Money’</th>
+                        <th style="text-align: center">Towards ‘GST’</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Favouring</td>
+                        <td style="color: red; font-weight: bold">
+                          Auto filled as per selected Project
+                        </td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Amount</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Amount (In Words)</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Cheque/ Demand Draft No.</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Date of Instrument</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Drawn On</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+        
+                  <p style="font-size: 11px; text-align: justify">
+                    Kindly note: As per provisions of Sec. 194 IA of the Income Tax Act
+                    1961, TDS @ 1% (one percent) should be deducted by the Applicant at
+                    the time of making payment of the Application Money. TDS deducted
+                    should be deposited to the Government Account through any of the
+                    authorized bank branches. Kindly submit original acknowledged copy
+                    of form 16B immediately on payment of TDS or before the end of the
+                    month in which the tax is deductible.
+                  </p>
+                </div>
+        
+                <!-- CUSTOMER SIGNATURE -->
+                <div class="grid-fit" style="margin-top: 22px">
+                  <div class="label">Customer Signature:</div>
+                  <span class="underline-holder" style="max-width: 100px;"></span>
+                </div>
+
+                        <!-- SIGNATURES SECTION -->
+        <div style="margin-top: 40px; font: 600 12px Arial, sans-serif; line-height: 1.6;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 50px;">
+              <div style="text-align: center;">
+                _________________________<br />Signature of 1st Applicant
+              </div>
+              <div style="text-align: center;">
+                _________________________<br />Signature of 2nd Applicant
+              </div>
+              <div style="text-align: center;">
+                _________________________<br />Signature of 3rd Applicant
+              </div>
+            </div>
+  
+            <div style="text-align: center; margin-bottom: 60px;">
+              _________________________<br />Signature of 4th Applicant
+            </div>
+  
+            <p style="margin: 10px 0;">I confirm,</p>
+            <p style="margin: 10px 0;">For</p>
+  
+            <div style="display: flex; justify-content: space-between; margin: 50px 0 30px;">
+              <div style="text-align: center;">
+                _________________________<br />Signature of Sales Manager
+              </div>
+              <div style="text-align: center;">
+                _________________________<br />Signature of Sourcing Manager
+              </div>
+            </div>
+  
+            <div style="display: flex; justify-content: space-between; margin-bottom: 40px;">
+              <div>Name of Sales Manager: _________________________</div>
+              <div>Name of Sourcing Manager: _________________________</div>
+            </div>
+          </div>
+  
+          <!-- REGISTERED OFFICE INFO -->
+          <div
+            style="
+              border: 1px solid #e21c22;
+              padding: 10px 14px;
+              margin: 40px 0 30px;
+              font: 600 11px/1.6 Arial, sans-serif;
+              text-align: justify;
+            "
+          >
+            Registered Office: Heston Builders Private Ltd. 463, Sant Veer Meghmaya
+            Road, Bhatt Chawl, Bane Compound, Tardeo, Mumbai- 400034.
+            <span style="color: red; font-weight: bold">As per selected Project</span><br />
+            MahaRERA Registration Number: P51900053358 , Available at website:
+            <a href="http://maharera.mahaonline.gov.in" target="_blank"
+              >http://maharera.mahaonline.gov.in</a
+            ><br />
+            Disclaimer: The company reserves the right to make modifications,
+            changes or alterations at their sole discretion without any prior
+            notice or reference.
+          </div>
+  
+          <!-- CUSTOMER SIGNATURE -->
+          <div class="grid-fit" style="margin: 40px 0;">
+            <div class="label">Customer Signature:</div>
+            <span class="underline-holder" style="max-width: 100px;"></span>
+          </div>
+  
+          <!-- FOOTER WITH QR -->
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: flex-end;
+              margin-top: 50px;
+            "
+          >
+            <div
+              style="
+                font: 600 10px/1.5 Arial, sans-serif;
+                border: 1px solid #e21c22;
+                padding: 8px 12px;
+                max-width: 75%;
+                text-align: justify;
+              "
+            >
+              Registered Office: Heston Builders Private Ltd. 463, Sant Veer
+              Meghmaya Road, Bhatt Chawl, Bane Compound, Tardeo, Mumbai- 400034.
+              <span style="color: red; font-weight: bold">As per selected Project</span
+              ><br />
+              MahaRERA Registration Number: P51900053358 , Available at website:
+              <a href="http://maharera.mahaonline.gov.in" target="_blank"
+                >http://maharera.mahaonline.gov.in</a
+              ><br />
+              Disclaimer: The company reserves the right to make modifications,
+              changes or alterations at their sole discretion without any prior
+              notice or reference.
+            </div>
+  
+            <div style="text-align: center; font: 700 11px Arial, sans-serif; color: red;">
+              As per selected Project<br />
+              <div
+                style="
+                  width: 90px;
+                  height: 90px;
+                  border: 1px solid #000;
+                  margin-top: 8px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 10px;
+                "
+              >
+                QR Code
+              </div>
+            </div>
+          </div>
+  
+            </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        const sections = [
+          document.getElementById("app2"),
+          document.getElementById("app3"),
+          document.getElementById("app4"),
+        ];
+        const addBtn = document.getElementById("addBtn");
+        let shown = 0;
+        addBtn.addEventListener("click", () => {
+          if (shown < sections.length) {
+            sections[shown].style.display = "block";
+            shown += 1;
+            if (shown === sections.length) addBtn.style.display = "none";
+            sections[shown - 1].scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+        const chars = document.querySelectorAll(".char");
+        chars.forEach((box, idx) => {
+          box.addEventListener("input", (e) => {
+            if (
+              e.target.value &&
+              e.target.maxLength === e.target.value.length
+            ) {
+              const next = chars[idx + 1];
+              if (next && next.classList.contains("char")) next.focus();
+            }
+          });
+          box.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace" && !e.target.value) {
+              const prev = chars[idx - 1];
+              if (prev && prev.classList.contains("char")) prev.focus();
+            }
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
