@@ -308,72 +308,94 @@
             }
         }
 
-        /* Mobile Responsive Fix */
+        /* Responsive Design */
         @media (max-width: 768px) {
             .page {
                 width: 100%;
-                margin: 0;
-                border: none;
-                box-shadow: none;
-            }
-
-            .frame {
-                padding: 12px;
-                margin: 0;
-                border: none;
-            }
-
-            /* Make grids stack on small screens */
-            .row.cols-2,
-            .row.cols-3,
-            .row.cols-4 {
-                grid-template-columns: 1fr;
-            }
-
-            /* Inline elements should wrap */
-            .inline {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-
-            .inline .line {
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-
-            /* Grid-fit labels and inputs stack */
-            .grid-fit {
-                grid-template-columns: 1fr;
-            }
-
-            .grid-fit>.label {
-                margin-bottom: 4px;
-            }
-
-            /* Textareas full width */
-            textarea.multiline {
-                width: 100%;
-            }
-
-            /* Applicant boxes full width */
-            .applicant-box {
+                margin: 12px auto;
+                border-width: 4px;
                 padding: 10px;
             }
 
-            /* Tables scrollable */
+            .frame {
+                padding: 12px 14px 20px;
+            }
+
+            .row.cols-2,
+            .row.cols-3,
+            .row.cols-4 {
+                grid-template-columns: 1fr !important;
+            }
+
+            .inline {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+
+            .inline span {
+                margin-top: 6px;
+            }
+
+            .char-grid {
+                --size: 22px;
+                justify-content: flex-start;
+            }
+
+            .char {
+                font-size: 14px;
+            }
+
+            .grid-fit {
+                grid-template-columns: 1fr !important;
+            }
+
+            .grid-fit-21 {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .add-btn {
+                font-size: 12px;
+                padding: 8px;
+                width: 95%;
+            }
+
+            .applicant-head {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .section-head-term {
+                margin: 40px 0 20px;
+                padding-top: 40px;
+                font-size: 14px;
+            }
+
+            .terms {
+                font-size: 12px;
+                line-height: 1.4;
+            }
+
             table {
+                font-size: 11px !important;
                 display: block;
                 overflow-x: auto;
                 white-space: nowrap;
             }
 
-            /* Footer QR section stack */
-            .footer,
-            .footer>div {
-                flex-direction: column;
-                text-align: center;
-                gap: 12px;
+            /* Footer and signature sections */
+            [style*="display: flex; justify-content: space-between;"] {
+                flex-direction: column !important;
+                gap: 32px;
+                align-items: flex-start !important;
+            }
+
+            .underline-holder {
+                min-width: 160px;
+            }
+
+            .footer-with-QR{
+                gap:40px;
             }
         }
     </style>
@@ -1450,7 +1472,7 @@
             </div>
 
             <!-- FOOTER WITH QR -->
-            <div style="
+            <div class="footer-with-QR" style="
               display: flex;
               justify-content: space-between;
               align-items: flex-end;
