@@ -54,13 +54,14 @@
             z-index: 2;
         }
 
-        .brand-row img {
+        .dec img {
             height: 80px;
             width: auto;
         }
 
         .header-text {
             flex: 1;
+            text-align: center;
         }
 
         .title {
@@ -97,7 +98,7 @@
             box-shadow: 0 2px 8px rgba(246, 213, 92, 0.3);
         }
 
-        .dec div:first-child {
+        /* .dec div:first-child {
             width: 28px;
             height: 28px;
         }
@@ -105,7 +106,7 @@
         .dec div:last-child {
             width: 40px;
             height: 40px;
-        }
+        } */
 
         /* Subtle pattern overlay */
         .header::before {
@@ -705,15 +706,14 @@
         <!-- Updated Header -->
         <header class="header">
             <div class="brand-row">
-                <img src="spenta white.png" alt="Spenta Logo">
+
                 <div class="header-text">
                     <div class="title">Customer Information Form</div>
                     <div class="subtitle">Please fill the form below to know more about the property</div>
                 </div>
             </div>
             <div class="dec">
-                <div></div>
-                <div></div>
+                <img src="spenta white.png" alt="Spenta Logo">
             </div>
         </header>
 
@@ -918,8 +918,8 @@
 
                         <label>How did you hear about us?</label>
                         <div class="checkbox-group">
-                            <label><input type="checkbox" name="src" value="cp" /> Channel Partner</label>
-                            <label><input type="checkbox" name="src" value="ref" /> Referral</label>
+                            <label><input type="checkbox" name="src" value="cp" id="srcCp" /> Channel Partner</label>
+                            <label><input type="checkbox" name="src" value="ref" id="srcRef" /> Referral</label>
                             <label><input type="checkbox" name="src" value="wa" /> WhatsApp</label>
                             <label><input type="checkbox" name="src" value="sm" /> Social Media (Facebook, Google,
                                 etc.)</label>
@@ -937,6 +937,46 @@
                             placeholder="Please provide additional details if applicable..."
                             maxlength="1000"></textarea>
                         <div class="char-counter" id="additionalCounter">0/1000 characters</div>
+
+                        <!-- Channel Partner Details -->
+                        <div id="channelPartnerDetails"
+                            style="display:none; margin-top:20px; background:#f9fbff; padding:16px; border-radius:8px;">
+                            <h4>Channel Partner Details</h4>
+                            <div class="grid cols-2">
+                                <div>
+                                    <label class="required">Company Name</label>
+                                    <input class="field" type="text" name="cpCompany" required>
+                                </div>
+                                <div>
+                                    <label class="required">Channel Partner Name</label>
+                                    <input class="field" type="text" name="cpName" required>
+                                </div>
+                                <div>
+                                    <label class="required">Mobile No.</label>
+                                    <input class="field" type="text" name="cpMobile" required pattern="[0-9]{10}">
+                                </div>
+                                <div>
+                                    <label class="required">RERA No.</label>
+                                    <input class="field" type="text" name="cpRera" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Referral Details -->
+                        <div id="referralDetails"
+                            style="display:none; margin-top:20px; background:#f9fbff; padding:16px; border-radius:8px;">
+                            <h4>Referral Details</h4>
+                            <div class="grid cols-2">
+                                <div>
+                                    <label class="required">Name</label>
+                                    <input class="field" type="text" name="refName" required>
+                                </div>
+                                <div>
+                                    <label class="required">Project Name</label>
+                                    <input class="field" type="text" name="refProject" required>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="actions">
@@ -1264,6 +1304,31 @@
         });
 
         setStep(1);
+
+        // Toggle extra sections in Step 4
+        function setupSourceOfVisit() {
+            const cpCheckbox = document.getElementById('srcCp');
+            const refCheckbox = document.getElementById('srcRef');
+            const cpDetails = document.getElementById('channelPartnerDetails');
+            const refDetails = document.getElementById('referralDetails');
+
+            function toggleSections() {
+                cpDetails.style.display = cpCheckbox.checked ? 'block' : 'none';
+                refDetails.style.display = refCheckbox.checked ? 'block' : 'none';
+
+                // Enable/disable required fields dynamically
+                cpDetails.querySelectorAll('input').forEach(inp => inp.required = cpCheckbox.checked);
+                refDetails.querySelectorAll('input').forEach(inp => inp.required = refCheckbox.checked);
+            }
+
+            cpCheckbox.addEventListener('change', toggleSections);
+            refCheckbox.addEventListener('change', toggleSections);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            setupSourceOfVisit();
+        });
+
     </script>
 </body>
 
