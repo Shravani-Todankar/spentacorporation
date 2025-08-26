@@ -13,8 +13,7 @@
             --border: #e6e7ea;
             --brand: #f6d55c;
             --brand-d: #e4be34;
-            --header-d: #525862;
-            --header-l: #f3f4f6;
+            --header-d: #333333;
         }
 
         * {
@@ -38,7 +37,7 @@
         .header {
             position: relative;
             padding: 24px 36px;
-            background: linear-gradient(135deg, #9ca3af 0%, #a6abb3 50%, #f3f4f6 100%);
+            background: #333333;
             color: #374151;
             overflow: hidden;
         }
@@ -52,13 +51,14 @@
             z-index: 2;
         }
 
-        .brand-row img {
+        .dec img {
             height: 80px;
             width: auto;
         }
 
         .header-text {
             flex: 1;
+            text-align: center;
         }
 
         .title {
@@ -88,7 +88,7 @@
             z-index: 1;
         }
 
-        .dec div {
+        /* .dec div {
             background: var(--brand);
             border-radius: 6px;
             box-shadow: 0 2px 8px rgba(246, 213, 92, 0.3);
@@ -102,7 +102,7 @@
         .dec div:last-child {
             width: 40px;
             height: 40px;
-        }
+        } */
 
         .header::before {
             content: '';
@@ -663,6 +663,12 @@
                 font-size: 13px;
             }
         }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            accent-color: grey;
+            /* Modern browsers support this */
+        }
     </style>
 </head>
 
@@ -670,15 +676,14 @@
     <div class="card">
         <header class="header">
             <div class="brand-row">
-                <img src="spenta white.png" alt="Spenta Logo">
+                <!-- <img src="spenta white.png" alt="Spenta Logo"> -->
                 <div class="header-text">
                     <div class="title">Sales Assessment Form</div>
                     <div class="subtitle">FOR INTERNAL USE ONLY - Complete customer assessment</div>
                 </div>
             </div>
             <div class="dec">
-                <div></div>
-                <div></div>
+                <img src="spenta white.png" alt="Spenta Logo">
             </div>
         </header>
 
@@ -735,7 +740,7 @@
                         </div>
 
                         <div class="form-group">
-                            <h4>To be filled by GRE:</h4>
+                            <h4>To be filled by Sales Manager</h4>
                             <div class="grid cols-2">
                                 <div>
                                     <label for="sourcingManager" class="required">Sourcing Manager</label>
@@ -744,7 +749,7 @@
                                     <div class="error-message">Please enter sourcing manager name</div>
                                 </div>
                                 <div>
-                                    <label for="salesManager" class="required">Sales Manager</label>
+                                    <label for="salesManager" class="required">Closing Manager</label>
                                     <input class="field" type="text" id="salesManager" name="salesManager"
                                         placeholder="Enter Sales Manager Name" required />
                                     <div class="error-message">Please enter sales manager name</div>
@@ -774,15 +779,16 @@
                                 </div>
                             </div>
 
-                            <div style="margin-top: 16px;">
+                            <!-- <div style="margin-top: 16px;">
                                 <label for="executiveName" class="required">Executive Name</label>
                                 <input class="field" type="text" id="executiveName" name="executiveName"
                                     placeholder="Enter Executive Name" required />
                                 <div class="error-message">Please enter executive name</div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
+                    <!-- Step 2: Assessment Details -->
                     <!-- Step 2: Assessment Details -->
                     <div class="section" data-step="2">
                         <h3>Assessment Details</h3>
@@ -792,15 +798,56 @@
                             <div>
                                 <label class="required">Lead Classification</label>
                                 <div class="radio-group cols-2">
-                                    <label><input type="radio" name="leadClassification" value="open" required>
-                                        Open</label>
-                                    <label><input type="radio" name="leadClassification" value="closed" required>
-                                        Closed</label>
+                                    <label><input type="radio" name="leadClassification" value="Hot" required>
+                                        Hot</label>
+                                    <label><input type="radio" name="leadClassification" value="Warm" required>
+                                        Warm</label>
+                                    <label><input type="radio" name="leadClassification" value="Cold" required>
+                                        Cold</label>
+                                    <label><input type="radio" name="leadClassification" value="Lost" required>
+                                        Lost</label>
                                 </div>
                                 <div class="error-message">Please select lead classification</div>
                             </div>
+
+                            <!-- Lost Reason Dropdown (Hidden by default) -->
+                            <div id="lostReasonContainer" style="display:none; margin-top:16px; width: 280px;">
+                                <label for="lostReason" class="required">Reason for Lost</label>
+                                <select class="field" id="lostReason" name="lostReason">
+                                    <option value="">Select Reason</option>
+                                    <option>Construction Issue</option>
+                                    <option>Project Issue</option>
+                                    <option>Developer History</option>
+                                    <option>Budget Issue</option>
+                                    <option>Google Reviews</option>
+                                    <option>Not Responding</option>
+                                    <option>Booked with competition</option>
+                                    <option>Pricing issue</option>
+                                    <option>RTMI</option>
+                                    <option>CSOP</option>
+                                    <option>Possession Timeline</option>
+                                    <option>No Reason Given</option>
+                                    <option>Casual Buyer</option>
+                                    <option>Postponed The Decision</option>
+                                    <option>Needs Time</option>
+                                    <option>Wrong number</option>
+                                    <option>Inventory issue</option>
+                                    <option>Serial VDNB</option>
+                                    <option>View issue</option>
+                                    <option>Plan Dropped</option>
+                                    <option>Configuration Issue</option>
+                                    <option>Not Interested</option>
+                                    <option>Location issue</option>
+                                    <option>Vastu Issue</option>
+                                    <option>Looking For Commercial</option>
+                                    <option>Channel Partner</option>
+                                    <option>Competition</option>
+                                </select>
+                                <div class="error-message">Please select a reason</div>
+                            </div>
                         </div>
                     </div>
+
 
                     <!-- Step 3: Current Residence -->
                     <div class="section" data-step="3">
@@ -813,14 +860,15 @@
                                 <div>
                                     <label class="required">Configuration</label>
                                     <div class="radio-group cols-4">
-                                        <label><input type="radio" name="currentConfig" value="1bhk" required> 1
-                                            BHK</label>
-                                        <label><input type="radio" name="currentConfig" value="2bhk" required> 2
-                                            BHK</label>
-                                        <label><input type="radio" name="currentConfig" value="3bhk" required> 3
-                                            BHK</label>
-                                        <label><input type="radio" name="currentConfig" value="4bhk" required> 4
-                                            BHK</label>
+                                        <label><input type="radio" name="config" value="1bhk" required /> 1 BHK</label>
+                                        <label><input type="radio" name="config" value="1.5bhk" /> 1.5 BHK</label>
+                                        <label><input type="radio" name="config" value="2bhk" /> 2 BHK</label>
+                                        <label><input type="radio" name="config" value="2.5bhk" /> 2.5 BHK</label>
+                                        <label><input type="radio" name="config" value="3bhk" /> 3 BHK</label>
+                                        <label><input type="radio" name="config" value="3.5bhk" /> 3.5 BHK</label>
+                                        <label><input type="radio" name="config" value="4bhk" /> 4 BHK</label>
+                                        <label><input type="radio" name="config" value="duplex" /> Duplex</label>
+                                        <label><input type="radio" name="config" value="other" /> Other</label>
                                     </div>
                                     <div class="error-message">Please select current configuration</div>
                                 </div>
@@ -828,11 +876,13 @@
                                     <label class="required">Ownership</label>
                                     <div class="radio-group cols-3">
                                         <label><input type="radio" name="ownership" value="owned" required>
-                                            Owned</label>
+                                            “Family Owned</label>
                                         <label><input type="radio" name="ownership" value="self-owned" required>
                                             Self-Owned</label>
                                         <label><input type="radio" name="ownership" value="rented" required>
                                             Rented</label>
+                                        <label><input type="radio" name="ownership" value="Pagdi" required>
+                                            Pagdi</label>
                                     </div>
                                     <div class="error-message">Please select ownership type</div>
                                 </div>
@@ -848,6 +898,7 @@
                             <div style="margin-top: 16px;">
                                 <label class="required">Family Size</label>
                                 <div class="radio-group cols-6">
+                                    <label><input type="radio" name="familySize" value="1" required> 1</label>
                                     <label><input type="radio" name="familySize" value="2" required> 2</label>
                                     <label><input type="radio" name="familySize" value="3" required> 3</label>
                                     <label><input type="radio" name="familySize" value="4" required> 4</label>
@@ -868,7 +919,7 @@
                             <h4>Customer's Desired Requirement:</h4>
 
                             <div>
-                                <label for="areaLooking" class="required">Area of flat customer is looking for</label>
+                                <label for="areaLooking" class="required">Type/Area of Flat Customer is looking for</label>
                                 <textarea class="field" id="areaLooking" name="areaLooking" rows="3"
                                     placeholder="Describe the area and specifications..." required></textarea>
                                 <div class="error-message">Please enter area requirements</div>
@@ -891,12 +942,8 @@
                                     <label for="ethnicity" class="required">Ethnicity</label>
                                     <select class="field" id="ethnicity" name="ethnicity" required>
                                         <option value="">Select Ethnicity</option>
-                                        <option value="gujarati">Gujarati</option>
-                                        <option value="marathi">Marathi</option>
-                                        <option value="hindi">Hindi</option>
-                                        <option value="south-indian">South Indian</option>
-                                        <option value="bengali">Bengali</option>
-                                        <option value="punjabi">Punjabi</option>
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Maharashtrian">Maharashtrian</option>
                                         <option value="other">Other</option>
                                     </select>
                                     <div class="error-message">Please select ethnicity</div>
@@ -1078,6 +1125,25 @@
             // Initialize first step
             setStep(1);
         });
+
+        // Show/Hide Lost Reason dropdown
+        const leadRadios = document.querySelectorAll('input[name="leadClassification"]');
+        const lostReasonContainer = document.getElementById('lostReasonContainer');
+        const lostReasonSelect = document.getElementById('lostReason');
+
+        leadRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                if (this.value === "Lost") {
+                    lostReasonContainer.style.display = "block";
+                    lostReasonSelect.setAttribute("required", "true");
+                } else {
+                    lostReasonContainer.style.display = "none";
+                    lostReasonSelect.removeAttribute("required");
+                    lostReasonSelect.value = ""; // reset
+                }
+            });
+        });
+
     </script>
 </body>
 

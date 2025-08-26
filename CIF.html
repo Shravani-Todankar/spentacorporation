@@ -13,8 +13,7 @@
             --border: #e6e7ea;
             --brand: #f6d55c;
             --brand-d: #e4be34;
-            --header-d: #525862;
-            --header-l: #f3f4f6;
+            --header-d: #333333;
         }
 
         * {
@@ -40,7 +39,7 @@
         .header {
             position: relative;
             padding: 24px 36px;
-            background: linear-gradient(135deg, #9ca3af 0%, #a6abb3 50%, #f3f4f6 100%);
+            background: #333333;
             color: #374151;
             overflow: hidden;
         }
@@ -698,6 +697,13 @@
                 margin-right: 8px;
             }
         }
+
+        /* Change checkbox tick color to grey */
+        input[type="radio"],
+        input[type="checkbox"] {
+            accent-color: grey;
+            /* Modern browsers support this */
+        }
     </style>
 </head>
 
@@ -724,15 +730,15 @@
                 <div class="steps-wrap" id="stepList">
                     <div class="step active" data-step="1">
                         <div class="badge">1</div>
-                        <div class="label">Customer Details</div>
+                        <div class="label">Personal Details</div>
                     </div>
                     <div class="step" data-step="2">
                         <div class="badge">2</div>
-                        <div class="label">Customer's Employment Details</div>
+                        <div class="label">Employment Details</div>
                     </div>
                     <div class="step" data-step="3">
                         <div class="badge">3</div>
-                        <div class="label">Customer's Requirements</div>
+                        <div class="label">Unit Requirements</div>
                     </div>
                     <div class="step" data-step="4">
                         <div class="badge">4</div>
@@ -785,8 +791,8 @@
                                 <div class="success-message">âœ" Valid email format</div>
                             </div>
                             <div>
-                                <label for="dob" class="required">Date of Birth</label>
-                                <input class="field" type="date" id="dob" name="dob" required min="1924-01-01"
+                                <label for="dob">Date of Birth</label>
+                                <input class="field" type="date" id="dob" name="dob" min="1924-01-01"
                                     max="2006-12-31" />
                                 <div class="error-message">Please enter a valid date (age must be between 18-100 years)
                                 </div>
@@ -794,9 +800,9 @@
                         </div>
 
                         <!-- Address -->
-                        <label class="required" style="margin-top:14px">Residential Address</label>
+                        <label style="margin-top:14px">Residential Address</label>
                         <textarea class="field" id="address" name="address" rows="3"
-                            placeholder="Enter your complete residential address" required minlength="10"
+                            placeholder="Enter your complete residential address" minlength="10"
                             maxlength="500"></textarea>
                         <div class="char-counter" id="addressCounter">0/500 characters</div>
                         <div class="error-message">Please enter a complete address (10-500 characters)</div>
@@ -833,6 +839,23 @@
                             <label><input type="radio" name="nationality" value="pio" /> PIO</label>
                             <label><input type="radio" name="nationality" value="oci" /> OCI</label>
                         </div>
+
+                        <!-- Sex -->
+                        <label class="required" style="margin-top:14px">Sex</label>
+                        <div class="radio-group cols-3">
+                            <label><input type="radio" name="sex" value="male" required /> Male</label>
+                            <label><input type="radio" name="sex" value="female" /> Female</label>
+                            <label><input type="radio" name="sex" value="other" /> Other</label>
+                        </div>
+
+                        <!-- Marital Status -->
+                        <label class="required" style="margin-top:14px">Marital Status</label>
+                        <div class="radio-group cols-3">
+                            <label><input type="radio" name="marital" value="single" required /> Single</label>
+                            <label><input type="radio" name="marital" value="married" /> Married</label>
+                            <label><input type="radio" name="marital" value="other" /> Other</label>
+                        </div>
+
                     </div>
 
                     <!-- Step 2 -->
@@ -875,17 +898,24 @@
 
                         <label class="required">Configuration</label>
                         <div class="radio-group cols-2">
-                            <label><input type="radio" name="config" value="2bhk" required /> 2 BHK</label>
+                            <label><input type="radio" name="config" value="1bhk" required /> 1 BHK</label>
+                            <label><input type="radio" name="config" value="1.5bhk" /> 1.5 BHK</label>
+                            <label><input type="radio" name="config" value="2bhk" /> 2 BHK</label>
+                            <label><input type="radio" name="config" value="2.5bhk" /> 2.5 BHK</label>
                             <label><input type="radio" name="config" value="3bhk" /> 3 BHK</label>
+                            <label><input type="radio" name="config" value="3.5bhk" /> 3.5 BHK</label>
                             <label><input type="radio" name="config" value="4bhk" /> 4 BHK</label>
+                            <label><input type="radio" name="config" value="duplex" /> Duplex</label>
+                            <label><input type="radio" name="config" value="other" /> Other</label>
                         </div>
 
                         <label class="required" style="margin-top:16px">Budget</label>
                         <div class="radio-group cols-2">
-                            <label><input type="radio" name="budget" value="3.5-4.00" required /> 3.5 â€" 4.00
-                                Cr.</label>
-                            <label><input type="radio" name="budget" value="4.5-5.00" /> 4.5 â€" 5.00 Cr.</label>
-                            <label><input type="radio" name="budget" value="6.00-7.00" /> 6.00 â€" 7.00 Cr.</label>
+                            <label><input type="radio" name="budget" value="0-1" required /> Less than 1 Cr.</label>
+                            <label><input type="radio" name="budget" value="1-2" /> 1 Cr. to 2 Cr.</label>
+                            <label><input type="radio" name="budget" value="2-4" /> 2 Cr. to 4 Cr.</label>
+                            <label><input type="radio" name="budget" value="4-6" /> 4 Cr. to 6 Cr.</label>
+                            <label><input type="radio" name="budget" value="6" /> More than 6 Cr.</label>
                         </div>
 
                         <div class="grid cols-2" style="margin-top:16px">
