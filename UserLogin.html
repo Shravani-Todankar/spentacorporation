@@ -195,38 +195,44 @@
             <h1 class="user-login-title">User Login</h1>
             <p class="user-login-subtitle">Please enter your contact number and OTP to continue.</p>
 
-            <form id="userLoginForm">
-                <div class="user-form-group">
-                    <label for="contactNo">Contact No.</label>
-                    <div class="user-form-inline">
-                        <input type="tel" id="contactNo" name="contactNo" placeholder="Enter your contact number"
-                            required>
-                        <button type="button" class="user-send-btn" onclick="sendOTP()">Send OTP</button>
-                    </div>
-                    <div id="otpMessage" class="user-otp-message"></div>
-                </div>
+          
+               <form id="userLoginForm">
+    <!-- Property Selection FIRST -->
+    <div class="user-form-group">
+        <label for="propertyName">Select Property / Project Name</label>
+        <select id="propertyName" name="propertyName" required
+            style="width:100%; padding:14px 16px; border:2px solid #e1e1e1; border-radius:8px; font-size:16px; background:#fafafa; outline:none; transition:border-color 0.3s;">
+            <option value="" disabled selected>Select property or project</option>
+            <option value="Altavista-1050">Altavista-Phase1-01050</option>
+            <option value="Altavista-0956">Altavista-Phase2-00956</option>
+            <option value="Altavista-0956">Altavista-Phase3-21249</option>
+            <option value="Altavista-0956">Altavista-Phase4-26131</option>
+            <option value="Spenta Stardeous">Stardeous</option>
+            <option value="Medius">Medius</option>
+            <option value="Ornata">Ornata-Amber-28964</option>
+            <option value="Ornata">Ornata-Sapphire-26905</option>
+        </select>
+    </div>
 
-                <div class="user-form-group">
-                    <label for="otp">OTP Verification</label>
-                    <input type="text" id="otp" name="otp" placeholder="Enter OTP" required>
-                </div>
+    <!-- Contact Number & OTP NEXT -->
+    <div class="user-form-group">
+        <label for="contactNo">Contact No.</label>
+        <div class="user-form-inline">
+            <input type="tel" id="contactNo" name="contactNo" placeholder="Enter your contact number" required>
+            <button type="button" class="user-send-btn" onclick="sendOTP()">Send OTP</button>
+        </div>
+        <div id="otpMessage" class="user-otp-message"></div>
+    </div>
 
-                <div class="user-form-group">
-                    <label for="propertyName">Select Property / Project Name</label>
-                    <select id="propertyName" name="propertyName" required
-                        style="width:100%; padding:14px 16px; border:2px solid #e1e1e1; border-radius:8px; font-size:16px; background:#fafafa; outline:none; transition:border-color 0.3s;">
-                        <option value="" disabled selected>Select property or project</option>
-                        <option value="Altavista">Altavista</option>
-                        <option value="Ornata">Ornata</option>
-                        <option value="Medius">Medius</option>
-                        <option value="Altura Towers">Altura Towers</option>
-                        <option value="Spenta Stardeous">Spenta Stardeous</option>
-                        <option value="Spenta Anthea">Spenta Anthea</option>
-                    </select>
-                </div>
+    <div class="user-form-group">
+        <label for="otp">OTP Verification</label>
+        <input type="text" id="otp" name="otp" placeholder="Enter OTP" required>
+    </div>
 
-                <button type="submit" class="user-submit-btn">Submit</button>
-            </form>
+    <button type="submit" class="user-submit-btn">Submit</button>
+</form>
+
+
         </div>
     </main>
 
@@ -261,7 +267,7 @@
 
             // For demo purposes, show OTP on screen (in real case, send via SMS API)
             otpMessage.style.color = "green";
-            otpMessage.textContent = `Your OTP is: ${generatedOTP}`;
+            otpMessage.textContent = Your OTP is: ${generatedOTP};
         }
 
         document.getElementById('userLoginForm').addEventListener('submit', function (e) {
